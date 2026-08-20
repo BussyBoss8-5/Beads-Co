@@ -161,7 +161,7 @@ window.checkoutShoppingCart = () => {
     db.push({ number: String(db.length + 1).padStart(3, "0"), name: buy, beads: shoppingCart.map(i => i.name).join(", "), price: document.getElementById("cart-total-price").textContent, status: "Pending" });
     shoppingCart = []; window.drawCart(); save(); alert(`🎉 Order logged for ${buy}!`);
 };
-const adminBtn = document.querySelector(".admin-dashed-btn"); if (adminBtn) { adminBtn.addEventListener("click", (e) => { e.preventDefault(); let pass = prompt("🔑 Enter Owner Passcode:"); if (pass === "beads9") { alert("✨ Welcome Owner."); window.location.href = "index.html"; } else if (pass !== null) alert("🛑 Access Denied!"); }); }
+const adminBtn = document.querySelector(".admin-dashed-btn"); if (adminBtn) { adminBtn.addEventListener("click", (e) => { e.preventDefault(); let pass = prompt("🔑 Enter Owner Passcode:"); if (pass === "beads9") { alert("✨ Welcome Owner."); window.location.href = "admin.html"; } else if (pass !== null) alert("🛑 Access Denied!"); }); }
 if(document.getElementById("add-order-btn")) {
     document.getElementById("add-order-btn").onclick = () => document.getElementById("popup-window").classList.add("show-popup");
     document.getElementById("close-modal-btn").onclick = () => document.getElementById("popup-window").classList.remove("show-popup");

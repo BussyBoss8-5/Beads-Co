@@ -3,144 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beads & Co. | Admin Page</title>
+    <title>Beads & Co. | Customer Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .shop-split-page { display: flex; width: 100vw; height: 100vh; position: relative; }
+        .shop-scroll-view { flex: 1; padding: 40px; display: flex; flex-direction: column; gap: 35px; height: 100%; overflow-y: auto; }
+        .riddle-arena-card { background-color: #FFFFFF; padding: 30px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); border: 2px dashed var(--logo-pink); display: flex; flex-direction: column; gap: 15px; }
+        .riddle-question-bubble { background-color: var(--bg-mint); padding: 20px; border-radius: 16px; border-left: 5px solid var(--logo-pink); font-size: 15px; line-height: 1.5; font-weight: 600; color: var(--text-plum); }
+        .riddle-input-row { display: flex; gap: 12px; align-items: center; margin-top: 5px; }
+        .riddle-text-field { flex: 1; padding: 14px; border: 2px solid var(--logo-mint); border-radius: 12px; outline: none; font-size: 14px; font-weight: 600; }
+        .riddle-text-field:focus { border-color: var(--logo-pink); }
+        .riddle-submit-btn { background-color: var(--text-plum); color: #FFFFFF; border: none; padding: 14px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s ease; }
+        .riddle-submit-btn:hover { background-color: var(--logo-pink); }
+    </style>
 </head>
 <body>
 
-    <div class="whole-page">
-        
-        <!-- Left Side Menu Section -->
+    <div class="shop-split-page">
+
+        <!-- Navigation Drawer Sidebar -->
         <aside class="sidebar">
-            <div class="logo-box">
-                <span class="logo-bead"></span>
-                <h2>Beads & Co.</h2>
-            </div>
-            
+            <div class="logo-box"><span class="logo-bead"></span><h2>Beads & Co.</h2></div>
             <nav class="menu-buttons">
-                <a href="index.html" class="menu-item active" id="nav-dash">Main Screen</a>
-                <a href="customer.html" class="menu-item">Order List</a>
-                <a href="customer_dashboard.html" class="menu-item">Customer Directory</a>
-                <a href="stock.html" class="menu-item">Bead Stock</a>
-                <a href="settings.html" class="menu-item">Settings</a>
+                <a href="index.html" class="menu-item active">🏠 Main Dashboard</a>
+                <a href="customer.html" class="menu-item">🛍️ Shop Store</a>
+                <a href="bestsellers.html" class="menu-item">⭐ Best Sellers</a>
+                <a href="giftkits.html" class="menu-item">🎁 Gift Kits</a>
+                <a href="#" class="menu-item" onclick="triggerCustomerLoginPrompt(event)" style="border-top: 1px solid rgba(0,0,0,0.05); margin-top: 10px;">👤 Log In</a>
+                <a href="#" class="menu-item" onclick="triggerCustomerLogout(event)" style="font-size: 13px; color: var(--gray-text); opacity: 0.7;">✕ Logout</a>
+                <a href="admin.html" class="menu-item admin-dashed-btn">⚙️ Admin Panel</a>
             </nav>
-            
-            <div class="user-box">
-                <p>Logged in as: <strong>Owner</strong></p>
-            </div>
+            <div class="user-box" id="user-status-display"><p>Mode: <strong>Customer</strong></p></div>
         </aside>
 
-        <!-- Right Side Workspace -->
-        <main class="main-content">
+        <!-- Main Workspace Area -->
+        <div class="shop-scroll-view" style="position: relative;">
+            <button class="cart-trigger-btn" onclick="toggleCartDropdown()" style="position: absolute; top: 35px; right: 40px;">🛒 My Cart (<span id="cart-counter-icon">0</span>)</button>
             
-            <header class="top-bar">
-                <div>
-                    <h1 id="page-title">Main Screen</h1>
-                    <p class="small-text">Track your beads, crafts, and customer orders here.</p>
-                </div>
-                
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <button class="refresh-button" id="add-order-btn" style="background-color: #FF7FA5; font-weight: bold;">+ New Order</button>
-                    <div class="status-box">
-                        <span class="green-dot"></span> System is Working
+            <div class="welcome-hero-card">
+                <h1>✨ Welcome to Beads & Co. ✨</h1>
+                <p>Your creative boutique for handcrafted bead jewelry, paper bookmarks, and custom accessory packs.</p>
+                <div class="store-status-badge">✨ Store Status: Open & Threading Orders!</div>
+            </div>
+
+            <div>
+                <h2 class="section-headline">🧭 Where would you like to go today?</h2>
+                <div class="dashboard-intro-grid">
+                    <div class="intro-feature-box border-pink">
+                        <div style="font-size: 32px;">🛍️</div><h3 class="feature-box-title">Explore Full Catalog</h3>
+                        <p class="feature-box-desc">View our collections including half-dollar bead packs, bracelets, rings, paper bookmarks, and keychains.</p>
+                        <a href="customer.html" class="dashboard-action-btn">Open Shop Catalog ➡️</a>
+                    </div>
+                    <div class="intro-feature-box border-yellow">
+                        <div style="font-size: 32px;">⭐</div><h3 class="feature-box-title">View Current Best Sellers</h3>
+                        <p class="feature-box-desc">Skip the lines and look directly at our top-voted, highest-rated craft bundles crafted previously on our design benches.</p>
+                        <a href="bestsellers.html" class="dashboard-action-btn">View Best Sellers ➡️</a>
                     </div>
                 </div>
-            </header>
+            </div>
 
-            <!-- 3 Colorful Stat Boxes -->
-            <section class="boxes-grid">
-                <div class="number-box pink-line">
-                    <span class="box-label">Orders to Ship</span>
-                    <span class="box-number" id="count-pending">0</span>
+            <div class="news-bulletin-panel">
+                <div style="font-size: 40px;">📢</div>
+                <div>
+                    <h3 class="bulletin-headline">Today's Studio News: Ribbon Upgrade!</h3>
+                    <p class="bulletin-desc">We just unpacked a fresh collection of glossy satin ribbons for our bookmarks! Choose from bubblegum pink, mint green, or royal gold when placing your orders today.</p>
                 </div>
-                <div class="number-box yellow-line">
-                    <span class="box-label">Beads Running Low</span>
-                    <span class="box-number" id="count-lowstock">3</span>
-                </div>
-                <div class="number-box mint-line">
-                    <span class="box-label">Total Money Made</span>
-                    <span class="box-number" id="count-revenue">$0.00</span>
-                </div>
-            </section>
+            </div>
 
-            <!-- Main Order Table Box -->
-            <section class="table-box">
-                <div class="table-header">
-                    <h3>All Registered Orders</h3>
-                    <button class="refresh-button" id="refresh-btn">Update List</button>
+            <!-- 🧩 WEEKLY CEO RIDDLE ARENA COMPONENT -->
+            <div class="riddle-arena-card">
+                <div style="text-align: left;">
+                    <div style="float: right; background: var(--logo-yellow); font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 20px;">🏆 Weekly Shoutout Prize!</div>
+                    <h2 class="section-headline" style="margin-bottom: 2px;">🧩 Weekly CEO Riddle Challenge</h2>
+                    <p style="color: var(--gray-text); font-size: 13px;">You have one week to submit your guess below! Next week, the CEO will post a special shoutout right here on the dashboard listing everyone who solved it correctly.</p>
                 </div>
-                <div class="table-scroll">
-                    <table id="orders-table">
-                        <thead>
-                            <tr>
-                                <th>Order Number</th>
-                                <th>Customer Name</th>
-                                <th>Items They Bought</th>
-                                <th>Total Price</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- JavaScript puts rows here automatically -->
-                        </tbody>
-                    </table>
+                <div class="riddle-question-bubble">
+                    🤔 "I am a tiny round cage that traps a finger but never locks it up. I have a front face that sparkles, but no eyes to look at you. I rule over a kingdom of five, but I only sit on one throne at a time. What am I?"
                 </div>
-            </section>
-        </main>
+                <div class="riddle-input-row">
+                    <input type="text" id="riddle-user-answer" class="riddle-text-field" placeholder="Type your riddle answer guess here...">
+                    <button class="riddle-submit-btn" onclick="submitCeoRiddleGuess()">Submit Guess ⚡</button>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="section-headline" style="margin-bottom: 15px;">🏆 Owner's Daily Design Picks</h2>
+                <div class="picks-grid">
+                    <div class="pick-mini-card"><div>👑</div><h4 class="mini-card-title">The Glass Pearl Mix</h4><p class="mini-card-desc">Luxury glass pearls with bubblegum pink letter blocks.</p></div>
+                    <div class="pick-mini-card"><div>🌸</div><h4 class="mini-card-title">Glitter Cloud Marker</h4><p class="mini-card-desc">Hand-painted pastel clouds with soft sparkly glitter trim.</p></div>
+                    <div class="pick-mini-card"><div>🔑</div><h4 class="mini-card-title">Teddy Backpack Ring</h4><p class="mini-card-desc">Our favorite keychain holding a miniature soft bear charm strand.</p></div>
+                </div>
+            </div>
+
+            <div class="faq-block">
+                <h3 class="faq-header-title">✨ Quick Shop Help Guide</h3>
+                <div class="faq-item"><h5 class="faq-question">📏 How do I choose my wrist size for bracelets?</h5><p class="faq-answer">When checking out, you can leave your age or wrist preferences inside your name line note container so we thread it perfectly!</p></div>
+                <div class="faq-item"><h5 class="faq-question">🎨 Can I request specific bead colors for my keychains?</h5><p class="faq-answer">Yes! All custom orders reach our database registry panel instantly. We review every note before trimming any string nodes.</p></div>
+            </div>
+
+            <section class="guarantee-dashed-box"><h3 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">🎨 Handcrafted Crafting Guarantee</h3><p style="color: var(--gray-text); font-size: 13px;">Every single letter item is customized carefully. Use your floating cart popup menu at any time to checkout.</p></section>
+            <footer class="simple-ground-footer"><p>© Beads & Co. Studio • Created by Owner</p></footer>
+        </div>
+
+        <!-- Popdown Dropdown Cart Window Box -->
+        <div class="cart-dropdown-panel" id="cart-dropdown-panel" style="position: absolute; top: 90px; right: 40px;">
+            <h4 class="cart-dropdown-header">🛒 Selected Items</h4>
+            <div class="cart-items-list" id="cart-list-container"></div>
+            <div class="payment-box">
+                <label>Choose Payment Option</label>
+                <select id="checkout-payment-type">
+                    <option value="Cash on Delivery">💵 Cash When Delivered ($0 fee)</option>
+                    <option value="Parent Allowance Account">💳 Parent Allowance Points Card</option>
+                    <option value="Local Store Pickup Pay">🏠 Pay At Local Bead Studio Bench</option>
+                </select>
+            </div>
+            <div class="cart-dropdown-total-bar"><span>Total Due:</span><span id="cart-total-price">$0.00</span></div>
+            <button class="checkout-btn" onclick="checkoutShoppingCart()">Complete Purchase 🛍️</button>
+        </div>
 
     </div>
 
-    <!-- FANCY POPUP WINDOW FOR MANUAL ADMIN ENTRIES -->
-    <div class="form-overlay" id="popup-window">
-        <div class="fancy-modal">
-            <h2>✨ Register New Order</h2>
-            <p style="color: #7A757F; font-size: 14px; margin-bottom: 10px;">Fill this out to add an order yourself.</p>
-            
-            <div class="input-group">
-                <label>Customer Name</label>
-                <input type="text" id="input-name" placeholder="Who bought it?">
-            </div>
-
-            <div class="input-group">
-                <label>Description</label>
-                <input type="text" id="input-beads" placeholder="e.g. Daisy Ring, Custom Bracelet">
-            </div>
-
-            <!-- Beautifully Separated Row Columns for Age and Size Boxes -->
-            <div style="display: flex; gap: 15px; width: 100%;">
-                <div class="input-group" style="flex: 1;">
-                    <label>Customer Age</label>
-                    <input type="number" id="input-age" placeholder="e.g. 9" min="1">
-                </div>
-                <div class="input-group" style="flex: 1;">
-                    <label>Wrist Size</label>
-                    <select id="input-size" style="height: 45px;">
-                        <option value="Small">Small (Kids)</option>
-                        <option value="Medium" selected>Medium (Standard)</option>
-                        <option value="Large">Large (Adult)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="input-group">
-                <label>Price Tier</label>
-                <select id="input-price" style="height: 45px;">
-    <option value="$0.50">$0.50 (Loose Bead Packs)</option>
-    <option value="$1.00">$1.00 (Bead Rings)</option>
-    <option value="$3.00">$3.00 (Keychains)</option>
-    <option value="$4.00">$4.00 (Paper Bookmarks)</option>
-    <option value="$5.00">$5.00 (Handmade Bracelets)</option>
-    <!-- ⬇️ ADD THESE TWO NEW OPTIONS FOR YOUR ADMIN FORM ⬇️ -->
-    <option value="$6.00">$6.00 (Handcrafted Earrings)</option>
-    <option value="$10.00">$10.00 (Luxury Necklaces)</option>
-    <option value="$20.00">$20.00 (Mega All-In-One Box)</option>
-</select>
-            </div>
-
-            <div class="modal-buttons">
-                <button class="modal-btn cancel-btn" id="close-modal-btn">Cancel</button>
-                <button class="modal-btn save-btn" id="save-order-btn">Save Order</button>
-            </div>
+    <!-- Category Popup Menu Container -->
+    <div class="products-overlay" id="category-modal">
+        <div class="products-modal">
+            <div class="modal-top"><h2 id="modal-category-title">Category Items</h2><button class="close-modal-x" onclick="closeCategoryMenu()">Back to Shop</button></div>
+            <div id="modal-products-list" style="margin-top: 15px;"></div>
         </div>
     </div>
 
