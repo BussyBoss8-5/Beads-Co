@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Customer Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="scrollable-body">
+
+    <div class="shop-split-page">
+        
+        <!-- Floating Shopping Cart Button -->
+        <button class="cart-trigger-btn" onclick="toggleCartDropdown()" style="position: absolute; top: 35px; right: 40px;">
+            🛒 My Cart (<span id="cart-counter-icon">0</span>)
+        </button>
+
+        <!-- Left Side Navigation Menu -->
+        <aside class="sidebar">
+            <div class="logo-box"><span class="logo-bead"></span><h2>Beads & Co.</h2></div>
+            <nav class="menu-buttons">
+                <a href="customer_dashboard.html" class="menu-item">🏠 Main Dashboard</a>
+                <a href="customer.html" class="menu-item active">🛍️ Shop Store</a>
+                <a href="bestsellers.html" class="menu-item">⭐ Best Sellers</a>
+                <a href="#" class="menu-item">🎁 Gift Kits</a>
+                <a href="#" class="menu-item" onclick="triggerCustomerLoginPrompt(event)" style="border-top: 1px solid rgba(0,0,0,0.05); margin-top: 10px;">👤 Log In</a>
+                <a href="#" class="menu-item" onclick="triggerCustomerLogout(event)" style="font-size: 13px; color: var(--gray-text); opacity: 0.7;">✕ Logout</a>
+                <a href="index.html" class="menu-item admin-dashed-btn">⚙️ Admin Panel</a>
+            </nav>
+            <div id="user-status-display" class="user-box"><p>Mode: <strong>Customer</strong></p></div>
+        </aside>
+
+        <!-- Main Shop Content Screen Canvas -->
+        <div class="shop-scroll-view">
+            
+            <header class="shop-banner" style="max-width: 80%;">
+                <h1>✨ Beads & Co. Shop ✨</h1>
+                <p class="shop-subtitle">Click any collection card below to open its dedicated styling room!</p>
+            </header>
+
+            <!-- Main Categories Grid Area -->
+            <div>
+                <h2>🛍️ Browse Collections</h2>
+                <!-- 🔎 Open customer.html and add the folder path prefix to your top 3 cards: -->
+<main class="category-grid" id="catalog-category-grid" style="margin-top: 15px;">
+    
+    <div class="category-card" onclick="location.href='Amazon Pages/loosebeads.html'">
+        <div class="category-icon" style="height: 90px;">🎨</div>
+        <div class="category-title">Loose Bead Packs</div>
+        <button class="open-btn">View Options ($0.50)</button>
+    </div>
+
+    <div class="category-card" onclick="location.href='Amazon Pages/beadrings.html'">
+        <div class="category-icon" style="height: 90px;">💍</div>
+        <div class="category-title">Bead Rings</div>
+        <button class="open-btn">View Options ($1.00)</button>
+    </div>
+
+    <div class="category-card" onclick="location.href='Amazon Pages/keychains.html'">
+        <div class="category-icon" style="height: 90px;">🔑</div>
+        <div class="category-title">Fun Keychains</div>
+        <button class="open-btn">View Options ($3.00)</button>
+    </div>
+
+</main>
+
+                <button id="catalog-show-more-btn" onclick="revealMoreCatalogCollections()" style="background: #FFFFFF; border: 2px dashed var(--logo-pink); color: var(--logo-pink); width: 100%; padding: 15px; border-radius: 16px; cursor: pointer; font-weight: bold; margin-top: 20px; font-size: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.01);">
+                    ➕ Show More Collections
+                </button>
+            </div>
+
+            <section class="guarantee-dashed-box">
+                <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">✉️ Wholesale Requests</h3>
+                <p style="color: var(--gray-text); font-size: 13px;">Add items to your custom carts to complete your registry order!</p>
+            </section>
+
+            <footer class="simple-ground-footer">
+                <p>© Beads & Co. Studio • Created by Owner</p>
+            </footer>
+
+        </div>
+
+        <!-- Dropdown Shopping Cart Windows Div Box -->
+        <div class="cart-dropdown-panel" id="cart-dropdown-panel" style="position: absolute; top: 90px; right: 40px;">
+            <h4 class="cart-dropdown-header">🛒 Selected Items</h4>
+            <div class="cart-items-list" id="cart-list-container"></div>
+            <div class="payment-box"><label>Choose Payment Option</label><select id="checkout-payment-type"><option value="Cash on Delivery">💵 Cash When Delivered</option><option value="Parent Allowance Account">💳 Parent Allowance Points</option></select></div>
+            <div class="cart-dropdown-total-bar"><span>Total Due:</span><span id="cart-total-price">$0.00</span></div>
+            <button class="checkout-btn" onclick="checkoutShoppingCart()">Complete Purchase 🛍️</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

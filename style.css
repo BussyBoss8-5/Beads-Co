@@ -1,0 +1,336 @@
+/* ==========================================================================
+   1. GLOBAL STYLES (Used by all files)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+:root {
+    --bg-mint: #E2F5F0;
+    --logo-mint: #BCE7DC;
+    --logo-pink: #FF7FA5;
+    --logo-yellow: #FFC93C;
+    --text-plum: #1D1128;
+    --gray-text: #7A757F;
+}
+
+body {
+    background-color: var(--bg-mint);
+    color: var(--text-plum);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Special setting just to let customers scroll through big catalogs */
+.scrollable-body {
+    overflow-y: auto !important;
+}
+
+/* ==========================================================================
+   2. SHARED LAYOUT STYLES (Admin Panels & Split Shop Screens)
+   ========================================================================== */
+.whole-page, .shop-split-page {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: var(--logo-mint);
+    display: flex;
+    flex-direction: column;
+    padding: 35px 20px;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 50px;
+}
+
+.logo-bead {
+    width: 16px;
+    height: 16px;
+    background-color: var(--logo-pink);
+    border-radius: 50%;
+}
+
+.logo-box h2 {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: var(--text-plum);
+    font-weight: 600;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.menu-item:hover, .menu-item.active {
+    background-color: #FFFFFF;
+    color: var(--logo-pink);
+}
+
+.admin-dashed-btn {
+    margin-top: 30px;
+    border: 2px dashed var(--logo-pink);
+    text-align: center;
+}
+
+.user-box {
+    font-size: 13px;
+    color: var(--gray-text);
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.main-content, .shop-scroll-view {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    position: relative;
+}
+
+/* ==========================================================================
+   3. ADMIN BOARD SPECIFIC INTERFACE ELEMENTS
+   ========================================================================== */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.small-text {
+    color: var(--gray-text);
+    margin-top: 6px;
+}
+
+.status-box {
+    background: #FFFFFF;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.green-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #2ec4b6;
+    border-radius: 50%;
+}
+
+.boxes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.number-box {
+    background-color: #FFFFFF;
+    padding: 25px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 5px solid transparent;
+}
+
+.pink-line { border-top-color: var(--logo-pink); }
+.yellow-line { border-top-color: var(--logo-yellow); }
+.mint-line { border-top-color: var(--logo-mint); }
+
+.box-label { font-size: 13px; font-weight: 600; color: var(--gray-text); }
+.box-number { font-size: 36px; font-weight: 800; }
+
+.table-box { background-color: #FFFFFF; border-radius: 20px; padding: 30px; }
+.table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+
+.refresh-button {
+    color: #FFFFFF;
+    border: none;
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+    background-color: var(--text-plum);
+}
+.refresh-button:hover { background-color: var(--logo-pink); }
+
+.table-scroll { width: 100%; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th { color: var(--gray-text); font-weight: 600; font-size: 13px; padding: 15px; border-bottom: 2px solid var(--bg-mint); }
+td { padding: 18px 15px; font-size: 15px; border-bottom: 1px solid var(--bg-mint); }
+
+.badge { padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; }
+.badge.green { background-color: #E2F5F0; color: #1E6B57; }
+.badge.yellow { background-color: #FFF6DF; color: #B28200; }
+
+/* ==========================================================================
+   4. POPUP FORMS & MODAL BLOCKS (Used by both sides)
+   ========================================================================== */
+.form-overlay, .products-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(29, 17, 40, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.form-overlay.show-popup, .products-overlay.show-menu { opacity: 1; pointer-events: auto; }
+
+.fancy-modal, .products-modal {
+    background-color: #FFFFFF;
+    width: 450px;
+    padding: 35px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.products-modal { width: 550px; max-height: 80vh; overflow-y: auto; }
+
+.modal-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg-mint); padding-bottom: 15px; }
+.close-modal-x { background: var(--bg-mint); border: none; font-size: 16px; font-weight: bold; padding: 5px 10px; border-radius: 8px; cursor: pointer; color: #1E6B57; }
+
+.input-group { display: flex; flex-direction: column; gap: 6px; }
+.input-group label { font-size: 12px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; }
+.input-group input, .input-group select { padding: 12px; border: 2px solid var(--bg-mint); border-radius: 12px; outline: none; font-size: 14px; }
+.input-group input:focus, .input-group select:focus { border-color: var(--logo-pink); }
+
+.modal-buttons { display: flex; gap: 12px; margin-top: 15px; }
+.modal-btn { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 700; font-size: 15px; cursor: pointer; }
+.cancel-btn { background-color: var(--bg-mint); color: #1E6B57; }
+.save-btn { background-color: var(--logo-pink); color: #FFFFFF; }
+
+.item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: var(--bg-mint); border-radius: 14px; margin-bottom: 10px; }
+.item-details h4 { font-size: 16px; font-weight: 700; }
+.item-details p { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+
+/* ==========================================================================
+   5. CUSTOMER SHOP & GRID CANVAS SYSTEM (White Cards Matching Admin Look)
+   ========================================================================== */
+.shop-banner {
+    background-color: #FFFFFF;
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+}
+
+.shop-subtitle { color: var(--gray-text); font-size: 16px; font-weight: 600; margin-top: 8px; }
+.category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+
+.category-card {
+    background-color: #FFFFFF !important;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.category-card:hover { border-color: var(--logo-pink); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(255, 127, 165, 0.08); }
+
+.category-icon { width: 100%; background-color: var(--bg-mint); border-radius: 14px; display: flex; justify-content: center; align-items: center; font-size: 50px; }
+.category-title { font-size: 22px; font-weight: 800; text-align: center; }
+
+.open-btn, .buy-item-btn {
+    background-color: var(--logo-pink);
+    color: #FFFFFF;
+    border: none;
+    padding: 12px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+.buy-item-btn { background-color: var(--text-plum); padding: 8px 14px; width: auto; margin-top: 0; font-size: 13px; }
+.buy-item-btn:hover { background-color: var(--logo-pink); }
+
+/* ==========================================================================
+   6. 🛒 FLOATING CUSTOMER DROPDOWN CART BOXES STYLES
+   ========================================================================== */
+.cart-trigger-btn {
+    background-color: var(--logo-pink) !important;
+    color: #FFFFFF !important;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(255,127,165,0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 50;
+    transition: transform 0.2s ease;
+}
+.cart-trigger-btn:hover { transform: scale(1.05); }
+
+.cart-dropdown-panel {
+    position: absolute;
+    top: 90px;
+    right: 40px;
+    width: 340px;
+    background-color: #FFFFFF !important;
+    border: 3px solid var(--logo-mint);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s ease;
+}
+
+.cart-dropdown-panel.show-cart { 
+    opacity: 1 !important; 
+    pointer-events: auto !important; 
+    transform: translateY(5px); 
+}
+
+.cart-dropdown-header { font-weight: 800; font-size: 16px; border-bottom: 2px solid var(--bg-mint); padding-bottom: 8px; }
+.cart-dropdown-total-bar { display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; border-top: 1px solid var(--bg-mint); padding-top: 10px; }.cart-items-list { max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }.cart-row { display: flex; justify-content: space-between; align-items: center; background-color: var(--bg-mint); padding: 10px; border-radius: 10px; font-size: 13px; }.remove-cart-item { background: none; border: none; color: var(--logo-pink); font-weight: bold; cursor: pointer; }.payment-box label { font-size: 11px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; display: block; margin-bottom: 4px; }.payment-box select { width: 100%; padding: 8px; border: 2px solid var(--bg-mint); border-radius: 8px; outline: none; }/* ==========================================================================7. EXCLUSIVE BEST SELLERS DECORATIVE ELEMENTS & HOMEPAGE CORES========================================================================== */.section-headline { font-size: 22px; font-weight: 800; margin-bottom: 15px; }.text-card-title { font-size: 18px; margin-bottom: 2px; }.text-icon-layout { height: 90px; position: relative; }.top-fire-tag { position: absolute; top: 5px; left: 5px; background: var(--logo-yellow); font-size: 10px; padding: 3px 6px; border-radius: 10px; font-weight: bold; }.best-seller-info-text { font-size: 12px; color: var(--gray-text); text-align: center; padding: 0 5px; flex: 1; }.best-seller-footer-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 5px; background: var(--bg-mint); padding: 8px; border-radius: 8px; }.best-seller-price-text { font-weight: bold; font-size: 14px; }.best-seller-add-btn { padding: 4px 8px; font-size: 11px; }.welcome-hero-card {background: linear-gradient(135deg, var(--logo-mint) 0%, #FFFFFF 100%);padding: 50px;border-radius: 24px;text-align: center;box-shadow: 0 10px 25px rgba(0,0,0,0.02);border: 3px solid #FFFFFF;}.store-status-badge { margin-top: 20px; display: inline-block; background-color: var(--logo-yellow); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; }.dashboard-intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }.intro-feature-box { background-color: #FFFFFF; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; border-left: 5px solid transparent; }.border-pink { border-left-color: var(--logo-pink); }.border-yellow { border-left-color: var(--logo-yellow); }.feature-box-title { font-weight: 800; font-size: 20px; }.feature-box-desc { color: var(--gray-text); font-size: 14px; line-height: 1.5; }.dashboard-action-btn {background-color: var(--text-plum);color: #FFFFFF;border: none;padding: 12px 20px;border-radius: 12px;font-weight: 700;font-size: 14px;cursor: pointer;text-decoration: none;text-align: center;transition: 0.2s ease;margin-top: auto;display: inline-block;}.dashboard-action-btn:hover { background-color: var(--logo-pink); }.news-bulletin-panel { background-color: #FFFFFF; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; gap: 20px; align-items: center; border-right: 5px solid var(--logo-mint); }.bulletin-headline { font-weight: 800; font-size: 18px; margin-bottom: 4px; }.bulletin-desc { color: var(--gray-text); font-size: 14px; line-height: 1.4; }.picks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }.pick-mini-card { background: #FFFFFF; padding: 20px; border-radius: 16px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.01); }.mini-card-title { font-weight: 800; font-size: 15px; }.mini-card-desc { color: var(--gray-text); font-size: 12px; margin-top: 4px; }.faq-block { background: #FFFFFF; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 15px; }.faq-header-title { font-size: 18px; font-weight: 800; border-bottom: 2px solid var(--bg-mint); padding-bottom: 8px; }.faq-item { background: var(--bg-mint); padding: 15px; border-radius: 12px; }.faq-question { font-weight: 800; font-size: 14px; margin-bottom: 4px; }.faq-answer { color: var(--gray-text); font-size: 13px; line-height: 1.4; }.guarantee-dashed-box { background-color: #FFFFFF; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--logo-mint); box-shadow: 0 10px 25px rgba(0,0,0,0.02); }.simple-ground-footer {text-align: center;background-color: var(--bg-mint) !important;color: var(--gray-text);padding: 20px;border-radius: 12px;margin-top: 30px;font-weight: 600;font-size: 13px;width: 100%;display: block;clear: both;}

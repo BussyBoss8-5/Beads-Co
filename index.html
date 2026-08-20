@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Admin Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="whole-page">
+        
+        <!-- Left Side Menu Section -->
+        <aside class="sidebar">
+            <div class="logo-box">
+                <span class="logo-bead"></span>
+                <h2>Beads & Co.</h2>
+            </div>
+            
+            <nav class="menu-buttons">
+                <a href="index.html" class="menu-item active" id="nav-dash">Main Screen</a>
+                <a href="customer.html" class="menu-item">Order List</a>
+                <a href="customer_dashboard.html" class="menu-item">Customer Directory</a>
+                <a href="stock.html" class="menu-item">Bead Stock</a>
+                <a href="settings.html" class="menu-item">Settings</a>
+            </nav>
+            
+            <div class="user-box">
+                <p>Logged in as: <strong>Owner</strong></p>
+            </div>
+        </aside>
+
+        <!-- Right Side Workspace -->
+        <main class="main-content">
+            
+            <header class="top-bar">
+                <div>
+                    <h1 id="page-title">Main Screen</h1>
+                    <p class="small-text">Track your beads, crafts, and customer orders here.</p>
+                </div>
+                
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="refresh-button" id="add-order-btn" style="background-color: #FF7FA5; font-weight: bold;">+ New Order</button>
+                    <div class="status-box">
+                        <span class="green-dot"></span> System is Working
+                    </div>
+                </div>
+            </header>
+
+            <!-- 3 Colorful Stat Boxes -->
+            <section class="boxes-grid">
+                <div class="number-box pink-line">
+                    <span class="box-label">Orders to Ship</span>
+                    <span class="box-number" id="count-pending">0</span>
+                </div>
+                <div class="number-box yellow-line">
+                    <span class="box-label">Beads Running Low</span>
+                    <span class="box-number" id="count-lowstock">3</span>
+                </div>
+                <div class="number-box mint-line">
+                    <span class="box-label">Total Money Made</span>
+                    <span class="box-number" id="count-revenue">$0.00</span>
+                </div>
+            </section>
+
+            <!-- Main Order Table Box -->
+            <section class="table-box">
+                <div class="table-header">
+                    <h3>All Registered Orders</h3>
+                    <button class="refresh-button" id="refresh-btn">Update List</button>
+                </div>
+                <div class="table-scroll">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Customer Name</th>
+                                <th>Items They Bought</th>
+                                <th>Total Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- JavaScript puts rows here automatically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <!-- FANCY POPUP WINDOW FOR MANUAL ADMIN ENTRIES -->
+    <div class="form-overlay" id="popup-window">
+        <div class="fancy-modal">
+            <h2>✨ Register New Order</h2>
+            <p style="color: #7A757F; font-size: 14px; margin-bottom: 10px;">Fill this out to add an order yourself.</p>
+            
+            <div class="input-group">
+                <label>Customer Name</label>
+                <input type="text" id="input-name" placeholder="Who bought it?">
+            </div>
+
+            <div class="input-group">
+                <label>Description</label>
+                <input type="text" id="input-beads" placeholder="e.g. Daisy Ring, Custom Bracelet">
+            </div>
+
+            <!-- Beautifully Separated Row Columns for Age and Size Boxes -->
+            <div style="display: flex; gap: 15px; width: 100%;">
+                <div class="input-group" style="flex: 1;">
+                    <label>Customer Age</label>
+                    <input type="number" id="input-age" placeholder="e.g. 9" min="1">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label>Wrist Size</label>
+                    <select id="input-size" style="height: 45px;">
+                        <option value="Small">Small (Kids)</option>
+                        <option value="Medium" selected>Medium (Standard)</option>
+                        <option value="Large">Large (Adult)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Price Tier</label>
+                <select id="input-price" style="height: 45px;">
+    <option value="$0.50">$0.50 (Loose Bead Packs)</option>
+    <option value="$1.00">$1.00 (Bead Rings)</option>
+    <option value="$3.00">$3.00 (Keychains)</option>
+    <option value="$4.00">$4.00 (Paper Bookmarks)</option>
+    <option value="$5.00">$5.00 (Handmade Bracelets)</option>
+    <!-- ⬇️ ADD THESE TWO NEW OPTIONS FOR YOUR ADMIN FORM ⬇️ -->
+    <option value="$6.00">$6.00 (Handcrafted Earrings)</option>
+    <option value="$10.00">$10.00 (Luxury Necklaces)</option>
+    <option value="$20.00">$20.00 (Mega All-In-One Box)</option>
+</select>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn" id="close-modal-btn">Cancel</button>
+                <button class="modal-btn save-btn" id="save-order-btn">Save Order</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

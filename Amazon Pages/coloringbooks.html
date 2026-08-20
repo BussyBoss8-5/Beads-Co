@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Coloring Books</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="scrollable-body">
+    <div class="shop-split-page">
+        <button class="cart-trigger-btn" onclick="toggleCartDropdown()" style="position: absolute; top: 35px; right: 40px;">
+            🛒 My Cart (<span id="cart-counter-icon">0</span>)
+        </button>
+        <aside class="sidebar">
+            <div class="logo-box"><span class="logo-bead"></span><h2>Beads & Co.</h2></div>
+            <nav class="menu-buttons">
+                <a href="customer_dashboard.html" class="menu-item">🏠 Main Dashboard</a>
+                <a href="customer.html" class="menu-item active">🛍️ Shop Store</a>
+                <a href="bestsellers.html" class="menu-item">⭐ Best Sellers</a>
+                <a href="#" class="menu-item">🎁 Gift Kits</a>
+                <a href="#" class="menu-item" onclick="triggerCustomerLoginPrompt(event)" style="border-top: 1px solid rgba(0,0,0,0.05); margin-top: 10px;">👤 Log In</a>
+                <a href="#" class="menu-item" onclick="triggerCustomerLogout(event)" style="font-size: 13px; color: var(--gray-text); opacity: 0.7;">✕ Logout</a>
+                <a href="index.html" class="menu-item admin-dashed-btn">⚙️ Admin Panel</a>
+            </nav>
+            <div id="user-status-display" class="user-box"><p>Mode: <strong>Customer</strong></p></div>
+        </aside>
+        <div class="shop-scroll-view">
+            <a href="customer.html" style="text-decoration: none; color: var(--logo-pink); font-weight: bold; font-size: 15px;">⬅️ Back to Shop Catalog</a>
+            <div style="display: flex; gap: 40px; margin-top: 20px; align-items: flex-start;">
+                <div style="flex: 1; background: #FFFFFF; border-radius: 24px; padding: 60px; text-align: center; font-size: 80px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); border: 3px solid #FFFFFF;">📚</div>
+                <div style="flex: 1.2; display: flex; flex-direction: column; gap: 20px;">
+                    <span style="background: var(--logo-yellow); font-size: 11px; font-weight: bold; padding: 4px 12px; border-radius: 20px; align-self: flex-start;">COLORING BOOKS</span>
+                    <h1 style="font-size: 36px; font-weight: 800; margin-top: -5px;">Premium Art Craft Coloring Books</h1>
+                    <h2 style="color: var(--logo-pink); font-size: 28px; font-weight: 800;">$7.00</h2>
+                    <div style="border-top: 2px solid #FFFFFF; margin-top: 5px; padding-top: 15px;">
+                        <h4 style="font-weight: bold; margin-bottom: 5px;">🎨 Select Custom Cover Finish</h4>
+                        <div style="display: flex; gap: 10px; margin-top: 5px;">
+                            <span class="color-choice-badge active-color" onclick="selectBeadPageColor(this, 'Bubblegum Pink')">🌸 Pink Cover</span>
+                            <span class="color-choice-badge" onclick="selectBeadPageColor(this, 'Mint Green')">🍃 Mint Cover</span>
+                            <span class="color-choice-badge" onclick="selectBeadPageColor(this, 'Soft Gold')">🌟 Gold Cover</span>
+                        </div>
+                    </div>
+                    <div style="background: #FFFFFF; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.01);">
+                        <h4 style="font-weight: 800; margin-bottom: 5px;">📦 Product Features</h4>
+                        <p style="color: var(--gray-text); font-size: 14px; line-height: 1.6;">Filled with clean, thick drawing cardstock. Features custom outlines of cute animals, magical unicorns, and trendy jewelry pattern grids.</p>
+                    </div>
+                    <button class="open-btn" onclick="addCustomProductToCart('Premium Coloring Book', '$7.00')" style="font-size: 16px; padding: 15px; margin-top: 15px;">Add to Shopping Cart 🛒</button>
+                </div>
+            </div>
+            <footer class="simple-ground-footer"><p>© Beads & Co. Studio • Created by Owner</p></footer>
+        </div>
+        <div class="cart-dropdown-panel" id="cart-dropdown-panel" style="position: absolute; top: 90px; right: 40px;">
+            <h4 class="cart-dropdown-header">🛒 Selected Items</h4>
+            <div class="cart-items-list" id="cart-list-container"></div>
+            <div class="payment-box"><label>Choose Payment Option</label><select id="checkout-payment-type"><option value="Cash on Delivery">💵 Cash When Delivered</option><option value="Parent Allowance Account">💳 Parent Allowance Points</option></select></div>
+            <div class="cart-dropdown-total-bar"><span>Total Due:</span><span id="cart-total-price">$0.00</span></div>
+            <button class="checkout-btn" onclick="checkoutShoppingCart()">Complete Purchase 🛍️</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

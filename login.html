@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Log In</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-page-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-mint);
+        }
+        .login-card {
+            background-color: #FFFFFF;
+            width: 400px;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .login-logo {
+            font-size: 40px;
+            margin-bottom: -10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-page-wrapper">
+        
+        <!-- White Premium Login Container Card -->
+        <div class="login-card">
+            <div class="login-logo">📿</div>
+            <h2 style="font-weight: 800; font-size: 26px;">Welcome to Beads & Co.</h2>
+            <p style="color: var(--gray-text); font-size: 14px; margin-top: -10px;">Please enter your name to access your customer dashboard.</p>
+            
+            <div class="input-group" style="text-align: left;">
+                <label>Your Name</label>
+                <input type="text" id="login-username" placeholder="e.g. Sophie Miller" style="width: 100%;">
+            </div>
+
+            <button class="open-btn" onclick="executeInterfaceLogin()" style="font-size: 15px; padding: 14px; margin-top: 10px; box-shadow: 0 5px 15px rgba(255,127,165,0.2);">
+                Log In to Shop ➡️
+            </button>
+            
+            <a href="index.html" style="font-size: 12px; color: var(--gray-text); text-decoration: none; margin-top: 5px;">⚙️ Access Admin Panel Panel</a>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Inline runner to handle direct redirections instantly
+        function executeInterfaceLogin() {
+            let inputField = document.getElementById("login-username");
+            let nameValue = inputField ? inputField.value.trim() : "";
+            
+            if (!nameValue) {
+                alert("Please enter your name to log in!");
+                return;
+            }
+            
+            // Save user profile token to computer memory disk
+            localStorage.setItem("beads_active_user", nameValue);
+            alert(`👋 Welcome, ${nameValue}! Redirecting to your dashboard...`);
+            
+            // Jump instantly over onto your homepage dashboard view file!
+            window.location.href = "customer_dashboard.html";
+        }
+    </script>
+</body>
+</html>

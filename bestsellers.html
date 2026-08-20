@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Best Sellers</title>
+    <!-- 🔎 Find this line in your <head> and add "?v=2" to the end: -->
+<!-- 🔎 Change this line back to the regular way so the browser can find it: -->
+<link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+
+    <div class="shop-split-page">
+
+        <!-- Left Side Navigation Menu -->
+        <aside class="sidebar">
+            <div class="logo-box">
+                <span class="logo-bead"></span>
+                <h2>Beads & Co.</h2>
+            </div>
+            
+            <nav class="menu-buttons">
+    <!-- ⬇️ ADD THIS NEW LINE RIGHT HERE IN ALL YOUR CUSTOMER PAGES ⬇️ -->
+    <a href="customer_dashboard.html" class="menu-item">🏠 Main Dashboard</a>
+    <a href="customer.html" class="menu-item">🛍️ Shop Store</a>
+    <a href="bestsellers.html" class="menu-item">⭐ Best Sellers</a>
+    <a href="giftkits.html" class="menu-item">🎁 Gift Kits</a>
+    <a href="index.html" class="menu-item admin-dashed-btn">⚙️ Admin Panel</a>
+</nav>
+
+            
+            <div class="user-box">
+                <p>Mode: <strong>Customer</strong></p>
+            </div>
+        </aside>
+
+        <!-- Main Scroll Canvas Area -->
+        <div class="shop-scroll-view">
+            
+            <!-- 🛒 FLOATING CART BUTTON (Now uses the fixed style class safely!) -->
+            <button class="cart-trigger-btn" onclick="toggleCartDropdown()" style="position: absolute; top: 35px; right: 40px;">
+                🛒 My Cart (<span id="cart-counter-icon">0</span>)
+            </button>
+            
+            <!-- Best Sellers Banner Header Box -->
+            <header class="shop-banner" style="max-width: 80%;">
+                <h1>⭐ Best Selling Items ⭐</h1>
+                <p class="shop-subtitle">The absolute most popular, highest-voted craft items from our studio bench!</p>
+            </header>
+
+            <!-- The Best Sellers Grid -->
+            <div>
+                <h2 class="section-headline">🔥 Current Fan Favorites</h2>
+                <main class="category-grid" style="margin-top: 0;">
+                    
+                    <!-- Top Product 1 -->
+                    <div class="category-card">
+                        <div class="category-icon text-icon-layout">
+                            💝 <span class="top-fire-tag">🔥 #1 TOP</span>
+                        </div>
+                        <div class="category-title text-card-title">Custom Name Bracelet</div>
+                        <p class="best-seller-info-text">Our highest-voted item! Threaded with your choices of alphabet custom name letters.</p>
+                        <div class="best-seller-footer-bar">
+                            <span class="best-seller-price-text">$5.00</span>
+                            <button class="buy-item-btn best-seller-add-btn" onclick="addItemToCart('Custom Name Bracelet ($5.00)')">Add 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Top Product 2 -->
+                    <div class="category-card">
+                        <div class="category-icon text-icon-layout">
+                            🔖 <span class="top-fire-tag">🔥 TOP</span>
+                        </div>
+                        <div class="category-title text-card-title">Hand-Drawn Floral Bookmark</div>
+                        <p class="best-seller-info-text">Beautiful floral mini paintings drawn directly onto super clean, thick art paper sheets.</p>
+                        <div class="best-seller-footer-bar">
+                            <span class="best-seller-price-text">$4.00</span>
+                            <button class="buy-item-btn best-seller-add-btn" onclick="addItemToCart('Hand-Drawn Floral Paper Bookmark ($4.00)')">Add 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Top Product 3 -->
+                    <div class="category-card">
+                        <div class="category-icon text-icon-layout">
+                            🔑 <span class="top-fire-tag">🔥 TOP</span>
+                        </div>
+                        <div class="category-title text-card-title">Backpack Name Keychain</div>
+                        <p class="best-seller-info-text">Clips onto your school bags or folders with high-quality rings and bead strands.</p>
+                        <div class="best-seller-footer-bar">
+                            <span class="best-seller-price-text">$3.00</span>
+                            <button class="buy-item-btn best-seller-add-btn" onclick="addItemToCart('Backpack Name Keychain ($3.00)')">Add 🛒</button>
+                        </div>
+                    </div>
+
+                    <!-- Top Product 4 -->
+                    <div class="category-card">
+                        <div class="category-icon text-icon-layout">
+                            🎨 <span class="top-fire-tag">🔥 TOP</span>
+                        </div>
+                        <div class="category-title text-card-title">Acrylic Pastel Bead Pack</div>
+                        <p class="best-seller-info-text">Super cheap craft packs holding our trademark mint and bubblegum pink loose beads.</p>
+                        <div class="best-seller-footer-bar">
+                            <span class="best-seller-price-text">$0.50</span>
+                            <button class="buy-item-btn best-seller-add-btn" onclick="addItemToCart('Acrylic Pastel Pack ($0.50)')">Add 🛒</button>
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+
+            <!-- Grounding Footer -->
+            <footer class="simple-ground-footer">
+                <p>© Beads & Co. Studio • Created by Owner</p>
+            </footer>
+
+        </div>
+
+        <!-- 📦 POPDOWN CART DROPDOWN DIV BOX -->
+        <div class="cart-dropdown-panel" id="cart-dropdown-panel" style="position: absolute; top: 90px; right: 40px;">
+            <h4 class="cart-dropdown-header">🛒 Selected Items</h4>
+            
+            <div class="cart-items-list" id="cart-list-container"></div>
+
+            <div class="payment-box">
+                <label>Choose Payment Option</label>
+                <select id="checkout-payment-type">
+                    <option value="Cash on Delivery">💵 Cash When Delivered ($0 fee)</option>
+                    <option value="Parent Allowance Account">💳 Parent Allowance Points Card</option>
+                    <option value="Local Store Pickup Pay">🏠 Pay At Local Bead Studio Bench</option>
+                </select>
+            </div>
+
+            <div class="cart-dropdown-total-bar">
+                <span>Total Due:</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            
+            <button class="checkout-btn" onclick="checkoutShoppingCart()">Complete Purchase 🛍️</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

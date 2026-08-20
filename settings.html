@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Settings</title>
+    <!-- Links to your master style file for matching theme colors -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Extra structural styling just for your clean Settings form rows */
+        .settings-card-grid { display: flex; flex-direction: column; gap: 25px; }
+        .setting-row-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid var(--bg-mint); }
+        .setting-row-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .setting-label-text h4 { font-weight: 800; font-size: 16px; margin-bottom: 2px; }
+        .setting-label-text p { font-size: 12px; color: var(--gray-text); }
+        .save-settings-btn { background-color: var(--logo-pink); color: white; border: none; padding: 14px 28px; font-weight: 700; border-radius: 12px; cursor: pointer; float: right; margin-top: 10px; transition: 0.2s; }
+        .save-settings-btn:hover { background-color: var(--text-plum); }
+    </style>
+</head>
+<body>
+
+    <div class="whole-page">
+        
+        <!-- Left Side Navigation Menu -->
+        <aside class="sidebar">
+            <div class="logo-box">
+                <span class="logo-bead"></span>
+                <h2>Beads & Co.</h2>
+            </div>
+            
+            <nav class="menu-buttons">
+                <a href="index.html" class="menu-item">Main Screen</a>
+                <a href="customer.html" class="menu-item">Order List</a>
+                <a href="customer_dashboard.html" class="menu-item">Customer Directory</a>
+                <a href="stock.html" class="menu-item">Bead Stock</a>
+                <!-- This link is active right now because we are configuring system values -->
+                <a href="settings.html" class="menu-item active">Settings</a>
+            </nav>
+            
+            <div class="user-box">
+                <p>Logged in as: <strong>Owner</strong></p>
+            </div>
+        </aside>
+
+        <!-- Right Side Workspace Area -->
+        <main class="main-content">
+            
+            <header class="top-bar">
+                <div>
+                    <h1>System Configuration</h1>
+                    <p class="small-text">Manage shop status flags, pricing values, and backend checkout metrics toggles.</p>
+                </div>
+                <div class="status-box">
+                    <span class="green-dot"></span> Configurations Saved
+                </div>
+            </header>
+
+            <!-- Main Interactive Controls Workspace Panels -->
+            <div class="settings-card-grid">
+                
+                <!-- Card Container Block 1: Shop Status Controls -->
+                <section class="table-box pink-line" style="border-top: 5px solid var(--logo-pink);">
+                    <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 20px;">📢 Digital Storefront Controls</h3>
+                    <div class="settings-card-grid">
+                        
+                        <!-- Toggle Row 1 -->
+                        <div class="setting-row-item">
+                            <div class="setting-label-text">
+                                <h4>Online Checkout Switch</h4>
+                                <p>Turn this off to temporarily disable the cart purchase button on customer pages (e.g., when taking a business break).</p>
+                            </div>
+                            <select id="setting-store-status" style="padding: 8px 12px; border: 2px solid var(--bg-mint); border-radius: 8px; font-weight: bold; width: 150px;">
+                                <option value="Open">🟢 Store Open</option>
+                                <option value="Closed">🔴 Store Closed</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Card Container Block 2: Financial and Fee Parameters -->
+                <section class="table-box yellow-line" style="border-top: 5px solid var(--logo-yellow);">
+                    <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 20px;">💵 Pricing & Fees Adjuster Ledger</h3>
+                    <div class="settings-card-grid">
+                        
+                        <!-- Input Row 1 -->
+                        <div class="setting-row-item">
+                            <div class="setting-label-text">
+                                <h4>Sales Tax Multiplier (%)</h4>
+                                <p>Set a custom local sales tax addition score to calculate checkout totals systematically.</p>
+                            </div>
+                            <input type="number" id="setting-tax-rate" placeholder="0" min="0" max="25" style="padding: 8px; border: 2px solid var(--bg-mint); border-radius: 8px; width: 100px; text-align: center; font-weight: bold;">
+                        </div>
+
+                        <!-- Input Row 2 -->
+                        <div class="setting-row-item">
+                            <div class="setting-label-text">
+                                <h4>Local Delivery Fee ($)</h4>
+                                <p>The standard added flat fee price charged when delivering bead craft packages directly to school bins or front porches.</p>
+                            </div>
+                            <input type="text" id="setting-delivery-fee" placeholder="$0.00" style="padding: 8px; border: 2px solid var(--bg-mint); border-radius: 8px; width: 100px; text-align: center; font-weight: bold;">
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- Ultimate Master Submission Trigger -->
+                <div>
+                    <button class="save-settings-btn" onclick="triggerSettingsSave()">Save System Configurations ✨</button>
+                </div>
+
+            </div>
+                                    <!-- 🧐 UPDATED PRIVATE RIDDLE ARENA SUBMISSIONS NOTEBOOK WITH RESET BUTTON -->
+            <section class="table-box pink-line" style="border-top: 5px solid var(--logo-pink); margin-top: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <div>
+                        <h3 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">🧐 Weekly Riddle Submissions Notebook</h3>
+                        <p class="small-text">Review player names and exact text guesses to pick your weekly winners.</p>
+                    </div>
+                    <!-- 🗑️ NEW RESET BUTTON FOR THE WEEKLY REFRESH -->
+                    <button class="refresh-button" onclick="clearWeeklyRiddleDatabaseLogs()" style="background-color: var(--logo-pink); font-weight: bold; padding: 10px 20px;">
+                        🗑️ Reset Weekly Riddle Logs
+                    </button>
+                </div>
+                
+                <div class="table-scroll">
+                    <table id="admin-riddle-table">
+                        <thead>
+                            <tr>
+                                <th>Player Name</th>
+                                <th>Their Riddle Guess</th>
+                                <th>Time Submitted</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- JavaScript automatically prints your players here! -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

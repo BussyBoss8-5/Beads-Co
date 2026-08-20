@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Bead Stock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="whole-page">
+        
+        <!-- Left Side Navigation Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-box"><span class="logo-bead"></span><h2>Beads & Co.</h2></div>
+            <nav class="menu-buttons">
+                <a href="index.html" class="menu-item">Main Screen</a>
+                <a href="#" class="menu-item">Order List</a>
+                <a href="customers.html" class="menu-item">Customer Directory</a>
+                <a href="stock.html" class="menu-item active">Bead Stock</a>
+                <a href="settings.html" class="menu-item">Settings</a>
+            </nav>
+            <div class="user-box"><p>Logged in as: <strong>Owner</strong></p></div>
+        </aside>
+
+        <!-- Right Side Workspace Area -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div>
+                    <h1>Inventory & Bead Stock</h1>
+                    <p class="small-text">Monitor supply counts for beads, rings, keychains, and bookmarks.</p>
+                </div>
+                <div class="status-box"><span class="green-dot"></span> Counts Are Live</div>
+            </header>
+
+            <!-- 3 Colorful Summary Stock Boxes -->
+            <section class="boxes-grid">
+                <div class="number-box pink-line"><span class="box-label">Total Craft Types</span><span class="box-number" id="total-items-count">0</span></div>
+                <div class="number-box yellow-line"><span class="box-label">Low Stock Warnings</span><span class="box-number" id="low-stock-count">0</span></div>
+                <div class="number-box mint-line"><span class="box-label">Total Material Pieces</span><span class="box-number" id="total-pieces-count">0</span></div>
+            </section>
+
+            <!-- Main Stock Table Container Box -->
+            <section class="table-box">
+                <div class="table-header"><h3>Materials Inventory List</h3></div>
+                <div class="table-scroll">
+                    <table id="stock-table">
+                        <thead>
+                            <tr>
+                                <th>Item Type Name</th>
+                                <th>Category Group</th>
+                                <th>Quantity Left</th>
+                                <th>Inventory Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- JavaScript automatically paints your materials here! -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beads & Co. | Keychains Shop</title><link rel="stylesheet" href="../style.css">
+</head>
+<body class="scrollable-body">
+    <div class="shop-split-page">
+        <button class="cart-trigger-btn" onclick="toggleCartDropdown()" style="position: absolute; top: 35px; right: 40px;">🛒 My Cart (<span id="cart-counter-icon">0</span>)</button>
+        <aside class="sidebar">
+            <div class="logo-box"><span class="logo-bead"></span><h2>Beads & Co.</h2></div>
+            <nav class="menu-buttons">
+                <a href="../customer_dashboard.html" class="menu-item">🏠 Main Dashboard</a><a href="../customer.html" class="menu-item active">🛍️ Shop Store</a><a href="../bestsellers.html" class="menu-item">⭐ Best Sellers</a><a href="#" class="menu-item">🎁 Gift Kits</a>
+                <a href="#" class="menu-item" onclick="triggerCustomerLoginPrompt(event)" style="border-top:1px solid rgba(0,0,0,0.05); margin-top:10px;">👤 Log In</a><a href="#" class="menu-item" onclick="triggerCustomerLogout(event)" style="font-size:13px; color:var(--gray-text); opacity:0.7;">✕ Logout</a>
+                <a href="../index.html" class="menu-item admin-dashed-btn">⚙️ Admin Panel</a>
+            </nav>
+            <div id="user-status-display" class="user-box"><p>Mode: <strong>Customer</strong></p></div>
+        </aside>
+        <div class="shop-scroll-view">
+            <a href="../customer.html" style="text-decoration:none; color:var(--logo-pink); font-weight:bold; font-size:14px;">⬅️ Back to Shop Catalog</a>
+            <div class="amazon-layout-split">
+                <div class="showcase-visual-box"><h1 id="big-item-emoji">🔑</h1><div id="wrapper-stock-badge"></div></div>
+                <div class="panel-options-box">
+                    <span style="background:var(--logo-mint); font-size:11px; font-weight:bold; padding:4px 12px; border-radius:20px; align-self:flex-start; text-transform:uppercase;">Accessories</span>
+                    <h1 style="font-size:32px; font-weight:800; margin-top:-5px;">Fun Keychains</h1><h2 style="color:var(--logo-pink); font-size:26px; font-weight:800; margin-top:-5px;">$3.00</h2>
+                    <div><h4 style="font-weight:800;">📦 Step 1: Select Your Keychain Design</h4><div class="sub-items-selector-grid" id="container-sub-products"></div></div>
+                    <div>
+                        <h4 style="font-weight:800;">🎨 Step 2: Choose Your Ring Ribbon Accent</h4>
+                        <div class="rainbow-badges-matrix">
+                            <span class="color-matrix-node selected-node" onclick="selectRainbowBeadColor(this, 'Ruby Red')">❤️ Red</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Mandarin Orange')">🧡 Orange</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Sunshine Yellow')">💛 Yellow</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Emerald Green')">💚 Green</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Ocean Blue')">💙 Blue</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Midnight Purple')">💜 Purple</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Bubblegum Pink')">🌸 Pink</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Lavender Mist')">🪻 Lavender</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Crimson Maroon')">🍷 Maroon</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Obsidian Black')">⚫ Black</span><span class="color-matrix-node" onclick="selectRainbowBeadColor(this, 'Crystal White')">⚪ White</span>
+                        </div>
+                    </div>
+                    <button class="open-btn" onclick="addCustomAmazonItemToCart()" style="font-size:16px; padding:15px; margin-top:10px;">Add Selected Build to Cart 🛒</button>
+                </div>
+            </div>
+            <footer class="simple-ground-footer"><p>© Beads & Co. Studio • Created by Owner</p></footer>
+        </div>
+        <div class="cart-dropdown-panel" id="cart-dropdown-panel" style="position: absolute; top: 90px; right: 40px;">
+            <h4 class="cart-dropdown-header">🛒 Selected Items</h4><div class="cart-items-list" id="cart-list-container"></div>
+            <div class="payment-box"><label>Choose Payment Option</label><select id="checkout-payment-type"><option value="Cash on Delivery">💵 Cash When Delivered ($0 fee)</option><option value="Parent Allowance Account">💳 Parent Allowance Points Card</option><option value="Local Store Pickup Pay">🏠 Pay At Local Bead Studio Bench</option></select></div>
+            <div class="cart-dropdown-total-bar"><span>Total Due:</span><span id="cart-total-price">$0.00</span></div><button class="checkout-btn" onclick="checkoutShoppingCart()">Complete Purchase 🛍️</button>
+        </div>
+    </div>
+    <script>window.activeCatalogPageKey = "keychains";</script>
+    <script src="../script.js"></script>
+</body>
+</html>
