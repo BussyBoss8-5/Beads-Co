@@ -21,10 +21,21 @@ const braceletItemsList = [
     { name: "Friendly Flower Daisy Loop", stock: "Low", pic: "🌸", info: "Handmade daisy loops." },
     { name: "Glow-In-The-Dark Midnight Strip", stock: "Out", pic: "🔮", info: "Out of Stock neon spacers." }
 ];
+const looseBeadsItemsList = [
+    { name: "Acrylic Pastel Pink Beads", stock: "Low", pic: "🎨", info: "Soft pastel shades." },
+    { name: "Alphabet Letter Blocks", stock: "High", pic: "🔤", info: "Perfect for names." },
+    { name: "Gold Star Spacer Pack", stock: "Out", pic: "🌟", info: "Awaiting bench arrivals." },
+   
+];
+const ringsItemsList = [
+    { name: "Mini Flower Accent Ring", stock: "Low", pic: "🎨", info: "Color wave patterns." },
+    { name: "Initial Letter Ring", stock: "High", pic: "🔤", info: "Custom initial band." }
+];
+
 
 const masterFullDatabase = {
     beads: { p: "$0.50", e: "🎨", tag: "Craft Packs", list: [{name:"Acrylic Pastel Mix Pack",stock:"High",pic:"🎨",info:"Soft mix."}, {name:"Alphabet Letter Blocks Box",stock:"Low",pic:"🔤",info:"Perfect for names."}, {name:"Gold Star Spacer Pack",stock:"Out",pic:"🌟",info:"Awaiting bench arrivals."}] },
-    rings: { p: "$1.00", e: "💍", tag: "Bead Rings", list: [{name:"Mini Flower Accent Ring",stock:"High",pic:"💍",info:"Elastic beaded bands."}, {name:"Alphabet Single Letter Ring",stock:"High",pic:"🔤",info:"Custom initial band."}] },
+    rings: { p: "$1.00", e: "💍", tag: "Bead Rings", list: [{name:"Mini Flower Accent Ring",stock:"Low",pic:"💍",info:"Elastic beaded bands."}, {name:"Initial Letter Ring",stock:"High",pic:"🔤",info:"Custom initial band."}] },
     keychains: { p: "$3.00", e: "🔑", tag: "Keychains", list: [{name:"Backpack Name Hanging Strip",stock:"High",pic:"🔑",info:"Clips onto zippers securely."}, {name:"Lucky Charm Ribbon Loop",stock:"Low",pic:"🎗️",info:"Satin wire loop straps."}] },
     bookmarks: { p: "$4.00", e: "🔖", tag: "Paper Art", list: [{name:"Hand-Drawn Floral Art Marker",stock:"High",pic:"🔖",info:"Watercolor plants."}, {name:"Glitter Background Sky Shield",stock:"High",pic:"✨",info:"Sparkly background paint."}] },
     earrings: { p: "$6.00", e: "✨", tag: "Earrings", list: [{name:"Dangle Pearl Drops Set",stock:"High",pic:"✨",info:"Glass pearls on loops."}, {name:"Cute Pastel Star Studs",stock:"Out",pic:"⭐",info:"Sold out."}] },
