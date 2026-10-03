@@ -37,7 +37,7 @@
         
         <!-- White Premium Login Container Card -->
         <div class="login-card">
-            <div class="login-logo">📿</div>
+            <div class="login-logo"><img src="logo.png" alt="" width="100" style="border-radius: 10px;"></div>
             <h2 style="font-weight: 800; font-size: 26px;">Welcome to Beads & Co.</h2>
             <p style="color: var(--gray-text); font-size: 14px; margin-top: -10px;">Please enter your name to access your customer dashboard.</p>
             
@@ -45,12 +45,24 @@
                 <label>Your Name</label>
                 <input type="text" id="login-username" placeholder="e.g. Sophie Miller" style="width: 100%;">
             </div>
+             <div class="input-group" style="text-align: left;">
+                <label>Your Email</label>
+                <input type="email" id="login-email" placeholder="e.g. sophie.miller@example.com" style="width: 100%;">
+            </div>
+             <div class="input-group" style="text-align: left;">
+                <label>Your Password</label>
+                <input type="password" id="login-password" placeholder="e.g. ••••••••" style="width: 100%;">
+            </div>
+             <div class="input-group" style="text-align: left;">
+                <label>Your Phone Number</label>
+                <input type="tel" id="login-phone" placeholder="e.g. +1 (555) 123-4567" style="width: 100%;">
+            </div>
 
             <button class="open-btn" onclick="executeInterfaceLogin()" style="font-size: 15px; padding: 14px; margin-top: 10px; box-shadow: 0 5px 15px rgba(255,127,165,0.2);">
                 Log In to Shop ➡️
             </button>
             
-            <a href="admin.html" style="font-size: 12px; color: var(--gray-text); text-decoration: none; margin-top: 5px;">⚙️ Access Admin Panel Panel</a>
+
         </div>
 
     </div>
@@ -72,7 +84,7 @@
             alert(`👋 Welcome, ${nameValue}! Redirecting to your dashboard...`);
             
             // Jump instantly over onto your homepage dashboard view file!
-            window.location.href = "customer_dashboard.html";
+            window.location.href = "index.html";
         }
     </script>
 </body>

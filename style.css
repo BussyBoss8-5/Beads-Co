@@ -1,63 +1,78 @@
+:root {
+    --main-font: 'Segoe UI', sans-serif;
+    --card-radius: 20px;
+    --button-radius: 12px;
+    --transition-speed: 0.25s;
+    --bg-mint: #E2F5F0;
+    --text-plum: #1D1128;
+    --logo-mint: #BCE7DC;
+    --logo-pink: #FF7FA5;
+    --logo-yellow: #FFC93C;
+    --gray-text: #7A757F;
+}
+
+/* Class used by the script to instantly stop animations */
+.disable-animations *, .disable-animations {
+    transition: none !important;
+    animation: none !important;
+}
+
 /* ==========================================================================
-   1. GLOBAL STYLES (Used by all files)
+   1. GLOBAL STYLES (Responsive Update)
    ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-:root {
-    --bg-mint: #E2F5F0;
-    --logo-mint: #BCE7DC;
-    --logo-pink: #FF7FA5;
-    --logo-yellow: #FFC93C;
-    --text-plum: #1D1128;
-    --gray-text: #7A757F;
+    font-family: var(--main-font) !important;
 }
 
 body {
-    background-color: var(--bg-mint);
+    background: var(--bg-mint);
     color: var(--text-plum);
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* Special setting just to let customers scroll through big catalogs */
+/* Updated scroll layout adjustments to prevent screen locking */
 .scrollable-body {
     overflow-y: auto !important;
 }
 
 /* ==========================================================================
-   2. SHARED LAYOUT STYLES (Admin Panels & Split Shop Screens)
+   2. SHARED LAYOUT STYLES (Admin Panels & Split Shop Screens Fluid Optimization)
    ========================================================================== */
 .whole-page, .shop-split-page {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
     position: relative;
 }
 
+/* Sidebar Responsive Transformation */
 .sidebar {
     width: 260px;
-    background-color: var(--logo-mint);
+    background: var(--logo-mint);
     display: flex;
     flex-direction: column;
     padding: 35px 20px;
+    transition: transform var(--transition-speed) ease, width var(--transition-speed) ease;
+    flex-shrink: 0;
+    z-index: 1000;
 }
 
 .logo-box {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 .logo-bead {
     width: 16px;
     height: 16px;
-    background-color: var(--logo-pink);
+    background: var(--logo-pink);
     border-radius: 50%;
 }
 
@@ -78,7 +93,7 @@ body {
     color: var(--text-plum);
     font-weight: 600;
     padding: 14px 16px;
-    border-radius: 12px;
+    border-radius: var(--button-radius);
     font-size: 15px;
     transition: 0.2s;
 }
@@ -99,16 +114,34 @@ body {
     color: var(--gray-text);
     padding-top: 20px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
 }
 
 .main-content, .shop-scroll-view {
     flex: 1;
-    padding: 40px;
-    overflow-y: auto;
+    padding: 40px 30px;
     display: flex;
     flex-direction: column;
     gap: 35px;
     position: relative;
+    max-width: 100%;
+}
+
+/* Mobile Toggle Hamburger Control Button Layout */
+.mobile-nav-toggle {
+    display: none;
+    background: var(--text-plum);
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 15px 0 15px;
+    align-self: flex-start;
 }
 
 /* ==========================================================================
@@ -118,6 +151,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .small-text {
@@ -145,14 +180,14 @@ body {
 
 .boxes-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px;
 }
 
 .number-box {
     background-color: #FFFFFF;
     padding: 25px;
-    border-radius: 20px;
+    border-radius: var(--card-radius) !important;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -166,15 +201,26 @@ body {
 .box-label { font-size: 13px; font-weight: 600; color: var(--gray-text); }
 .box-number { font-size: 36px; font-weight: 800; }
 
-.table-box { background-color: #FFFFFF; border-radius: 20px; padding: 30px; }
-.table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+.table-box { 
+    background-color: #FFFFFF; 
+    border-radius: var(--card-radius) !important; 
+    padding: 30px; 
+}
+.table-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 25px; 
+    gap: 15px;
+    flex-wrap: wrap;
+}
 
 .refresh-button {
     color: #FFFFFF;
     border: none;
     padding: 12px 24px;
     font-weight: 600;
-    border-radius: 12px;
+    border-radius: var(--button-radius) !important;
     cursor: pointer;
     font-size: 14px;
     transition: 0.2s;
@@ -182,17 +228,21 @@ body {
 }
 .refresh-button:hover { background-color: var(--logo-pink); }
 
-.table-scroll { width: 100%; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; text-align: left; }
+.table-scroll { 
+    width: 100%; 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch;
+}
+table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
 th { color: var(--gray-text); font-weight: 600; font-size: 13px; padding: 15px; border-bottom: 2px solid var(--bg-mint); }
 td { padding: 18px 15px; font-size: 15px; border-bottom: 1px solid var(--bg-mint); }
 
-.badge { padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; }
+.badge { padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 700; display: inline-block; }
 .badge.green { background-color: #E2F5F0; color: #1E6B57; }
 .badge.yellow { background-color: #FFF6DF; color: #B28200; }
 
 /* ==========================================================================
-   4. POPUP FORMS & MODAL BLOCKS (Used by both sides)
+   4. POPUP FORMS & MODAL BLOCKS (Fluid Modal Updates)
    ========================================================================== */
 .form-overlay, .products-overlay {
     position: fixed;
@@ -204,60 +254,64 @@ td { padding: 18px 15px; font-size: 15px; border-bottom: 1px solid var(--bg-mint
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 2000;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
+    padding: 20px;
 }
 
 .form-overlay.show-popup, .products-overlay.show-menu { opacity: 1; pointer-events: auto; }
 
 .fancy-modal, .products-modal {
     background-color: #FFFFFF;
-    width: 450px;
-    padding: 35px;
-    border-radius: 24px;
+    width: 100%;
+    max-width: 450px;
+    padding: 30px 25px;
+    border-radius: var(--card-radius) !important;
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-height: 90vh;
+    overflow-y: auto;
 }
-.products-modal { width: 550px; max-height: 80vh; overflow-y: auto; }
+.products-modal { max-width: 550px; }
 
 .modal-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg-mint); padding-bottom: 15px; }
 .close-modal-x { background: var(--bg-mint); border: none; font-size: 16px; font-weight: bold; padding: 5px 10px; border-radius: 8px; cursor: pointer; color: #1E6B57; }
 
 .input-group { display: flex; flex-direction: column; gap: 6px; }
 .input-group label { font-size: 12px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; }
-.input-group input, .input-group select { padding: 12px; border: 2px solid var(--bg-mint); border-radius: 12px; outline: none; font-size: 14px; }
+.input-group input, .input-group select { padding: 12px; border: 2px solid var(--bg-mint); border-radius: 12px; outline: none; font-size: 14px; width: 100%; }
 .input-group input:focus, .input-group select:focus { border-color: var(--logo-pink); }
 
-.modal-buttons { display: flex; gap: 12px; margin-top: 15px; }
-.modal-btn { flex: 1; padding: 14px; border-radius: 12px; border: none; font-weight: 700; font-size: 15px; cursor: pointer; }
+.modal-buttons { display: flex; gap: 12px; margin-top: 15px; flex-wrap: wrap; }
+.modal-btn { flex: 1; min-width: 120px; padding: 14px; border-radius: var(--button-radius) !important; border: none; font-weight: 700; font-size: 15px; cursor: pointer; }
 .cancel-btn { background-color: var(--bg-mint); color: #1E6B57; }
-.save-btn { background-color: var(--logo-pink); color: #FFFFFF; }
+.save-btn { background: var(--logo-pink); color: #FFFFFF; }
 
-.item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: var(--bg-mint); border-radius: 14px; margin-bottom: 10px; }
+.item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; background-color: var(--bg-mint); border-radius: 14px; margin-bottom: 10px; gap: 10px; }
 .item-details h4 { font-size: 16px; font-weight: 700; }
 .item-details p { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
 
 /* ==========================================================================
-   5. CUSTOMER SHOP & GRID CANVAS SYSTEM (White Cards Matching Admin Look)
+   5. CUSTOMER SHOP & GRID CANVAS SYSTEM
    ========================================================================== */
 .shop-banner {
     background-color: #FFFFFF;
-    padding: 40px;
+    padding: 40px 20px;
     border-radius: 24px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
 }
 
 .shop-subtitle { color: var(--gray-text); font-size: 16px; font-weight: 600; margin-top: 8px; }
-.category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+.category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; }
 
 .category-card {
     background-color: #FFFFFF !important;
-    border-radius: 20px;
+    border-radius: var(--card-radius) !important;
     padding: 25px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
     display: flex;
@@ -273,64 +327,608 @@ td { padding: 18px 15px; font-size: 15px; border-bottom: 1px solid var(--bg-mint
 .category-title { font-size: 22px; font-weight: 800; text-align: center; }
 
 .open-btn, .buy-item-btn {
-    background-color: var(--logo-pink);
-    color: #FFFFFF;
+    background: var(--logo-pink) !important;
+    color: #FFFFFF !important;
     border: none;
     padding: 12px;
     font-weight: 700;
-    border-radius: 12px;
+    border-radius: var(--button-radius) !important;
     cursor: pointer;
     width: 100%;
     margin-top: 10px;
 }
-.buy-item-btn { background-color: var(--text-plum); padding: 8px 14px; width: auto; margin-top: 0; font-size: 13px; }
-.buy-item-btn:hover { background-color: var(--logo-pink); }
+.buy-item-btn { background-color: var(--text-plum) !important; padding: 8px 14px; width: auto; margin-top: 0; font-size: 13px; }
+.buy-item-btn:hover { background-color: var(--logo-pink) !important; }
 
 /* ==========================================================================
-   6. 🛒 FLOATING CUSTOMER DROPDOWN CART BOXES STYLES
-   ========================================================================== */
+6. FLOATING CUSTOMER DROPDOWN CART BOXES STYLES (Adaptive Alignment)
+========================================================================== */
 .cart-trigger-btn {
-    background-color: var(--logo-pink) !important;
-    color: #FFFFFF !important;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 25px;
-    font-weight: 800;
-    font-size: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(255,127,165,0.3);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 50;
-    transition: transform 0.2s ease;
+background: var(--logo-pink) !important;
+color: #FFFFFF !important;
+border: none;
+padding: 12px 20px;
+border-radius: 25px;
+font-weight: 800;
+font-size: 15px;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(255,127,165,0.3);
+display: flex;
+align-items: center;
+gap: 8px;
+z-index: 50;
+transition: transform 0.2s ease;
 }
 .cart-trigger-btn:hover { transform: scale(1.05); }
-
 .cart-dropdown-panel {
-    position: absolute;
-    top: 90px;
-    right: 40px;
-    width: 340px;
-    background-color: #FFFFFF !important;
-    border: 3px solid var(--logo-mint);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    z-index: 60;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.25s ease;
+position: absolute;
+top: 90px;
+right: 30px;
+width: 320px;
+max-width: calc(100vw - 60px);
+background-color: #FFFFFF !important;
+border: 3px solid var(--logo-mint);
+border-radius: 20px;
+padding: 20px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+z-index: 60;
+display: flex;
+flex-direction: column;
+gap: 15px;
+opacity: 0;
+pointer-events: none;
+transition: 0.25s ease;
 }
-
-.cart-dropdown-panel.show-cart { 
-    opacity: 1 !important; 
-    pointer-events: auto !important; 
-    transform: translateY(5px); 
+.cart-dropdown-panel.show-cart {
+opacity: 1 !important;
+pointer-events: auto !important;
+transform: translateY(5px);
 }
-
 .cart-dropdown-header { font-weight: 800; font-size: 16px; border-bottom: 2px solid var(--bg-mint); padding-bottom: 8px; }
-.cart-dropdown-total-bar { display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; border-top: 1px solid var(--bg-mint); padding-top: 10px; }.cart-items-list { max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }.cart-row { display: flex; justify-content: space-between; align-items: center; background-color: var(--bg-mint); padding: 10px; border-radius: 10px; font-size: 13px; }.remove-cart-item { background: none; border: none; color: var(--logo-pink); font-weight: bold; cursor: pointer; }.payment-box label { font-size: 11px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; display: block; margin-bottom: 4px; }.payment-box select { width: 100%; padding: 8px; border: 2px solid var(--bg-mint); border-radius: 8px; outline: none; }/* ==========================================================================7. EXCLUSIVE BEST SELLERS DECORATIVE ELEMENTS & HOMEPAGE CORES========================================================================== */.section-headline { font-size: 22px; font-weight: 800; margin-bottom: 15px; }.text-card-title { font-size: 18px; margin-bottom: 2px; }.text-icon-layout { height: 90px; position: relative; }.top-fire-tag { position: absolute; top: 5px; left: 5px; background: var(--logo-yellow); font-size: 10px; padding: 3px 6px; border-radius: 10px; font-weight: bold; }.best-seller-info-text { font-size: 12px; color: var(--gray-text); text-align: center; padding: 0 5px; flex: 1; }.best-seller-footer-bar { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 5px; background: var(--bg-mint); padding: 8px; border-radius: 8px; }.best-seller-price-text { font-weight: bold; font-size: 14px; }.best-seller-add-btn { padding: 4px 8px; font-size: 11px; }.welcome-hero-card {background: linear-gradient(135deg, var(--logo-mint) 0%, #FFFFFF 100%);padding: 50px;border-radius: 24px;text-align: center;box-shadow: 0 10px 25px rgba(0,0,0,0.02);border: 3px solid #FFFFFF;}.store-status-badge { margin-top: 20px; display: inline-block; background-color: var(--logo-yellow); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; }.dashboard-intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }.intro-feature-box { background-color: #FFFFFF; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; border-left: 5px solid transparent; }.border-pink { border-left-color: var(--logo-pink); }.border-yellow { border-left-color: var(--logo-yellow); }.feature-box-title { font-weight: 800; font-size: 20px; }.feature-box-desc { color: var(--gray-text); font-size: 14px; line-height: 1.5; }.dashboard-action-btn {background-color: var(--text-plum);color: #FFFFFF;border: none;padding: 12px 20px;border-radius: 12px;font-weight: 700;font-size: 14px;cursor: pointer;text-decoration: none;text-align: center;transition: 0.2s ease;margin-top: auto;display: inline-block;}.dashboard-action-btn:hover { background-color: var(--logo-pink); }.news-bulletin-panel { background-color: #FFFFFF; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; gap: 20px; align-items: center; border-right: 5px solid var(--logo-mint); }.bulletin-headline { font-weight: 800; font-size: 18px; margin-bottom: 4px; }.bulletin-desc { color: var(--gray-text); font-size: 14px; line-height: 1.4; }.picks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }.pick-mini-card { background: #FFFFFF; padding: 20px; border-radius: 16px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.01); }.mini-card-title { font-weight: 800; font-size: 15px; }.mini-card-desc { color: var(--gray-text); font-size: 12px; margin-top: 4px; }.faq-block { background: #FFFFFF; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 15px; }.faq-header-title { font-size: 18px; font-weight: 800; border-bottom: 2px solid var(--bg-mint); padding-bottom: 8px; }.faq-item { background: var(--bg-mint); padding: 15px; border-radius: 12px; }.faq-question { font-weight: 800; font-size: 14px; margin-bottom: 4px; }.faq-answer { color: var(--gray-text); font-size: 13px; line-height: 1.4; }.guarantee-dashed-box { background-color: #FFFFFF; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--logo-mint); box-shadow: 0 10px 25px rgba(0,0,0,0.02); }.simple-ground-footer {text-align: center;background-color: var(--bg-mint) !important;color: var(--gray-text);padding: 20px;border-radius: 12px;margin-top: 30px;font-weight: 600;font-size: 13px;width: 100%;display: block;clear: both;}
+.cart-dropdown-total-bar { display: flex; justify-content: space-between; font-weight: 800; font-size: 15px; border-top: 1px solid var(--bg-mint); padding-top: 10px; }
+.cart-items-list { max-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+.cart-row { display: flex; justify-content: space-between; align-items: center; background-color: var(--bg-mint); padding: 10px; border-radius: 10px; font-size: 13px; gap: 10px; }
+.remove-cart-item { background: none; border: none; color: var(--logo-pink); font-weight: bold; cursor: pointer; }
+.payment-box label { font-size: 11px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; display: block; margin-bottom: 4px; }
+.payment-box select { width: 100%; padding: 8px; border: 2px solid var(--bg-mint); border-radius: 8px; outline: none; }
+.checkout-btn {
+background: var(--logo-pink) !important;
+color: #FFFFFF !important;
+border: none;
+padding: 14px;
+font-weight: 800;
+font-size: 15px;
+border-radius: var(--button-radius) !important;
+cursor: pointer;
+width: 100%;
+margin-top: 10px;
+transition: 0.2s ease;
+}
+.checkout-btn:hover { background-color: var(--text-plum) !important; }
+/* ==========================================================================
+7. DECORATIVE HOMEPAGE & CHALLENGE PANELS
+========================================================================== */
+.section-headline { font-size: 22px; font-weight: 800; margin-bottom: 15px; }
+.welcome-hero-card {
+background: linear-gradient(135deg, var(--logo-mint) 0%, #FFFFFF 100%);
+padding: 50px 25px;
+border-radius: 24px;
+text-align: center;
+box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+border: 3px solid #FFFFFF;
+}
+.store-status-badge { margin-top: 20px; display: inline-block; background: var(--logo-yellow); padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 13px; }
+.dashboard-intro-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+.intro-feature-box { background-color: #FFFFFF; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 12px; border-left: 5px solid transparent; }
+.border-pink { border-left-color: var(--logo-pink); }
+.border-yellow { border-left-color: var(--logo-yellow); }
+.feature-box-title { font-weight: 800; font-size: 20px; }
+.feature-box-desc { color: var(--gray-text); font-size: 14px; line-height: 1.5; }
+.dashboard-action-btn {
+background-color: var(--text-plum);
+color: #FFFFFF;
+border: none;
+padding: 12px 20px;
+border-radius: var(--button-radius) !important;
+font-weight: 700;
+font-size: 14px;
+cursor: pointer;
+text-decoration: none;
+text-align: center;
+transition: 0.2s ease;
+margin-top: auto;
+display: inline-block;
+}
+.news-bulletin-panel {
+background-color: #FFFFFF;
+padding: 30px;
+border-radius: 20px;
+box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+display: flex;
+gap: 20px;
+align-items: center;
+border-right: 5px solid var(--logo-mint);
+}
+.picks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+.pick-mini-card { background: #FFFFFF; padding: 20px; border-radius: 16px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.01); }
+.faq-block { background: #FFFFFF; padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 15px; }
+.faq-header-title { font-size: 18px; font-weight: 800; border-bottom: 2px solid var(--bg-mint); padding-bottom: 8px; }
+.faq-item { background: var(--bg-mint); padding: 15px; border-radius: 12px; }
+.guarantee-dashed-box { background-color: #FFFFFF; padding: 25px; border-radius: 20px; text-align: center; border: 2px dashed var(--logo-mint); box-shadow: 0 10px 25px rgba(0,0,0,0.02); }
+.simple-ground-footer { text-align: center; background: var(--bg-mint) !important; color: var(--gray-text); padding: 20px; border-radius: 12px; margin-top: 30px; font-weight: 600; font-size: 13px; width: 100%; display: block; clear: both; }
+/* Button Hover Dynamic Enhancements */
+.dashboard-action-btn, .open-btn, .buy-item-btn {
+background: var(--logo-pink) !important;
+color: #FFFFFF !important;
+text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15);
+border: 2px solid rgba(255, 255, 255, 0.1);
+box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.dashboard-action-btn:hover, .open-btn:hover, .buy-item-btn:hover {
+background: var(--logo-yellow) !important;
+color: var(--text-plum) !important;
+transform: translateY(-2px);
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+.customizer-tab-bar button { transition: all 0.2s ease; }
+.customizer-tab-active { background: #FFFFFF !important; color: var(--logo-pink) !important; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+.customizer-tab-inactive { background: transparent !important; color: var(--gray-text) !important; }
+.theme-swatch-option-layout {
+width: 100%; padding: 10px 14px; background: var(--bg-mint); border: 2px solid transparent; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s ease; text-align: left;
+}
+.theme-swatch-option-layout:hover { border-color: var(--logo-pink); background: #FFFFFF; }
+.theme-customize-panel-wrapper {
+position: absolute; top: 90px; right: 30px; background: #FFFFFF; border: 3px solid var(--logo-mint); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 999; display: none; width: 300px; max-width: calc(100vw - 60px);
+}
+.theme-customize-panel-wrapper.show-panel { display: block !important; }
+.badge-trophy-shelf { background: #FFFFFF; padding: 24px; border-radius: 24px; border: 3px dashed var(--logo-mint); display: flex; gap: 16px; align-items: center; overflow-x: auto; margin-bottom: 25px; -webkit-overflow-scrolling: touch; }
+
+/* ==========================================================================
+   8. RIDDLE ARENA (from inline <style> in index-2.html)
+   ========================================================================== */
+.riddle-arena-card { background-color: #FFFFFF; padding: 30px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0,0,0,0.02); border: 2px dashed var(--logo-pink); display: flex; flex-direction: column; gap: 15px; }
+.riddle-question-bubble { background-color: var(--bg-mint); padding: 20px; border-radius: 16px; border-left: 5px solid var(--logo-pink); font-size: 15px; line-height: 1.5; font-weight: 600; color: var(--text-plum); }
+.riddle-input-row { display: flex; gap: 12px; align-items: center; margin-top: 5px; }
+.riddle-text-field { flex: 1; padding: 14px; border: 2px solid var(--logo-mint); border-radius: 12px; outline: none; font-size: 14px; font-weight: 600; }
+.riddle-text-field:focus { border-color: var(--logo-pink); }
+.riddle-submit-btn { background-color: var(--text-plum); color: #FFFFFF; border: none; padding: 14px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s ease; white-space: nowrap; }
+.riddle-submit-btn:hover { background-color: var(--logo-pink); }
+
+/* ==========================================================================
+   9. THEME CUSTOMIZER FLOATING PANEL (from inline <style> in index-2.html)
+   ========================================================================== */
+.theme-customize-btn {
+    position: fixed; bottom: 30px; right: 30px; width: 56px; height: 56px; border-radius: 50%;
+    background: #FFFFFF; border: 3px solid var(--logo-mint); font-size: 24px; cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15); z-index: 90; transition: transform 0.2s ease;
+    display: flex; align-items: center; justify-content: center;
+}
+.theme-customize-btn:hover { transform: scale(1.08) rotate(15deg); }
+.theme-customize-panel {
+    position: fixed; bottom: 100px; right: 30px; width: 320px; background: #FFFFFF; border-radius: 20px;
+    padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.18); z-index: 91; opacity: 0; pointer-events: none;
+    transform: translateY(10px); transition: 0.25s ease; display: flex; flex-direction: column; gap: 10px;
+    max-height: 80vh; overflow-y: auto;
+}
+.theme-customize-panel.show-panel { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.theme-panel-header { display: flex; justify-content: space-between; align-items: center; }
+.theme-panel-header h4 { font-size: 15px; font-weight: 800; }
+.theme-panel-close { background: var(--bg-mint); border: none; border-radius: 8px; padding: 4px 9px; cursor: pointer; font-weight: bold; }
+.theme-panel-sub { font-size: 12px; color: var(--gray-text); margin-top: -6px; }
+.theme-current-label { font-size: 12px; font-weight: 700; color: var(--text-plum); background: var(--bg-mint); padding: 6px 10px; border-radius: 8px; }
+.theme-panel-section { font-size: 11px; font-weight: 800; color: var(--gray-text); text-transform: uppercase; margin-top: 4px; }
+.theme-swatch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.theme-swatch-option {
+    height: 48px; border-radius: 12px; border: 3px solid transparent; cursor: pointer; color: #FFFFFF;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 15px; gap: 1px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.35);
+}
+.theme-swatch-option span { font-size: 8px; font-weight: 700; text-transform: uppercase; }
+.theme-swatch-option.active-swatch { border-color: var(--text-plum); }
+.theme-reset-btn { background: var(--bg-mint); border: none; padding: 10px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--text-plum); }
+.theme-reset-btn:hover { background: var(--logo-mint); }
+
+/* ==========================================================================
+   10. REWARDS WHEEL (from inline <style> in index-2.html)
+   ========================================================================== */
+#wheel-frame {
+    position: relative; width: 340px; height: 340px; background: #FFF; border-radius: 50%;
+    border: 8px solid var(--text-plum); box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+}
+#spinning-wheel-canvas {
+    position: absolute; width: 100%; height: 100%; border-radius: 50%;
+    transition: transform 4s cubic-bezier(0.1, 0.8, 0.25, 1);
+    background: conic-gradient(#FF7FA5 0deg 45deg, #FFC93C 45deg 90deg, #4CACE0 90deg 135deg, #B47EEA 135deg 180deg, #BCE7DC 180deg 225deg, #FB8B24 225deg 270deg, #E63946 270deg 315deg, #2EC4B6 315deg 360deg);
+}
+#wheel-labels {
+    position: absolute; width: 100%; height: 100%; border-radius: 50%;
+    transition: transform 4s cubic-bezier(0.1, 0.8, 0.25, 1); pointer-events: none;
+    color: #1D1128; font-weight: 800; font-size: 10px;
+}
+#wheel-spin-trigger {
+    position: absolute; width: 75px; height: 75px; background: var(--text-plum); border: 4px solid #FFF;
+    color: #FFF; border-radius: 50%; font-weight: 900; font-size: 13px; cursor: pointer; z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+#wheel-pointer {
+    position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 0; height: 0;
+    border-left: 14px solid transparent; border-right: 14px solid transparent;
+    border-top: 24px solid var(--text-plum); z-index: 20;
+}
+
+/* ==========================================================================
+   11. MEDIA QUERIES (The Responsiveness Engine)
+   ========================================================================== */
+
+/* --- Touch Usability Base --- */
+input, select, textarea, button {
+    min-height: 44px;
+    font-size: 16px;
+}
+a, button, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tablet & Intermediate Views Dropdowns and Spacing Adaptations */
+@media (max-width: 1024px) {
+    .main-content, .shop-scroll-view {
+        padding: 30px 20px;
+        gap: 25px;
+    }
+    .welcome-hero-card {
+        padding: 40px 20px;
+    }
+    .dashboard-intro-grid {
+        grid-template-columns: 1fr;
+    }
+    .picks-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .news-bulletin-panel {
+        padding: 25px;
+    }
+}
+
+/* Mobile Screens (Collapsible Navigation & Single Column Layout grids) */
+@media (max-width: 768px) {
+    /* Layout: stack vertically, allow natural scroll */
+    .whole-page, .shop-split-page {
+        flex-direction: column;
+        height: auto !important;
+        min-height: 100dvh;
+    }
+
+    /* Transform Sidebar into an Off-Canvas Draw Panel */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        height: 100dvh;
+        width: 280px;
+        transform: translateX(-100%);
+        box-shadow: 5px 0 25px rgba(0,0,0,0.1);
+    }
+
+    /* Active Script State Triggering Sidebar Opening */
+    .sidebar.mobile-open {
+        transform: translateX(0);
+    }
+
+    /* Show toggle buttons on mobile interfaces */
+    .mobile-nav-toggle {
+        display: inline-flex;
+    }
+
+    /* Main content: remove fixed height, allow scroll */
+    .main-content, .shop-scroll-view {
+        padding: 20px 15px !important;
+        gap: 25px;
+        height: auto !important;
+        overflow-y: visible !important;
+        position: relative;
+    }
+
+    /* Shop split page override (inline style in HTML sets height:100vh) */
+    .shop-split-page {
+        height: auto !important;
+        min-height: 100dvh;
+    }
+    .shop-scroll-view {
+        height: auto !important;
+        overflow-y: visible !important;
+    }
+
+    /* Cart trigger button: make it flow naturally instead of absolute */
+    .cart-trigger-btn {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        align-self: flex-end;
+        margin-bottom: 10px;
+    }
+
+    /* Cart dropdown: full-width-ish panel on mobile */
+    .cart-dropdown-panel, #cart-dropdown-panel {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 90% !important;
+        max-width: 360px !important;
+        height: 100dvh !important;
+        max-height: 100dvh !important;
+        border-radius: 0 !important;
+        border-left: 3px solid var(--logo-mint) !important;
+        border-top: none !important;
+        border-right: none !important;
+        border-bottom: none !important;
+        overflow-y: auto !important;
+        z-index: 1100 !important;
+    }
+    .cart-items-list {
+        max-height: 45vh;
+    }
+
+    /* Theme customize panel: full-width on mobile */
+    .theme-customize-panel, #theme-customize-panel,
+    .theme-customize-panel-wrapper {
+        position: fixed !important;
+        bottom: 0 !important;
+        top: auto !important;
+        right: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 80dvh !important;
+        border-radius: 20px 20px 0 0 !important;
+        overflow-y: auto !important;
+    }
+    .theme-customize-panel {
+        bottom: 0 !important;
+    }
+
+    /* Theme customize floating button: keep above content */
+    .theme-customize-btn {
+        bottom: 20px !important;
+        right: 20px !important;
+        width: 52px !important;
+        height: 52px !important;
+    }
+
+    /* News bulletin: stack vertically */
+    .news-bulletin-panel {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    /* Boxes grid: single column */
+    .boxes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Category grid: smaller cards */
+    .category-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+    }
+
+    /* Dashboard intro: single column */
+    .dashboard-intro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Picks grid: smaller */
+    .picks-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 12px;
+    }
+
+    /* Pick mini card: smaller padding */
+    .pick-mini-card {
+        padding: 15px;
+    }
+
+    /* Table boxes: reduce padding */
+    .table-box {
+        padding: 20px 15px;
+    }
+
+    /* Number boxes: reduce padding */
+    .number-box {
+        padding: 20px 15px;
+    }
+
+    /* Box numbers: smaller */
+    .box-number {
+        font-size: 28px;
+    }
+
+    /* Section headlines: smaller */
+    .section-headline {
+        font-size: 18px;
+    }
+
+    /* Welcome hero: reduce padding */
+    .welcome-hero-card {
+        padding: 30px 15px;
+    }
+
+    /* FAQ block: reduce padding */
+    .faq-block {
+        padding: 20px 15px;
+    }
+
+    /* Guarantee box: reduce padding */
+    .guarantee-dashed-box {
+        padding: 20px 15px;
+    }
+
+    /* Intro feature box: reduce padding */
+    .intro-feature-box {
+        padding: 20px 15px;
+    }
+
+    /* Theme swatch grid: 3 columns on mobile */
+    .theme-swatch-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Riddle input row: stack vertically */
+    .riddle-input-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .riddle-submit-btn {
+        width: 100%;
+        padding: 14px;
+    }
+
+    /* Rewards wheel: scale down */
+    #wheel-frame {
+        width: min(82vw, 300px) !important;
+        height: min(82vw, 300px) !important;
+    }
+
+    /* Rewards wheel overlay: ensure it scrolls if needed */
+    #rewards-wheel-overlay {
+        overflow-y: auto !important;
+        padding: 15px !important;
+    }
+}
+
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+    /* Category grid: 2 columns */
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    /* Modal buttons: full width */
+    .modal-btn {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    /* Table boxes: minimal padding */
+    .table-box {
+        padding: 15px 10px;
+    }
+
+    /* Theme swatch grid: 2 columns */
+    .theme-swatch-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Cart dropdown: full width */
+    .cart-dropdown-panel, #cart-dropdown-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Welcome hero: minimal padding */
+    .welcome-hero-card {
+        padding: 25px 10px;
+    }
+
+    /* Picks grid: 2 columns */
+    .picks-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    /* Box number: smaller */
+    .box-number {
+        font-size: 24px;
+    }
+
+    /* Feature box title: smaller */
+    .feature-box-title {
+        font-size: 17px;
+    }
+
+    /* Theme customize btn: move to avoid overlap */
+    .theme-customize-btn {
+        bottom: 15px !important;
+        right: 15px !important;
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 20px !important;
+    }
+}
+
+/* Extra Small Screens */
+@media (max-width: 360px) {
+    /* Category grid: single column */
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Theme swatch grid: single column */
+    .theme-swatch-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Picks grid: single column */
+    .picks-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Section headline: smaller */
+    .section-headline {
+        font-size: 16px;
+    }
+}
+
+/* Landscape Mode for Short Screens */
+@media (max-height: 500px) and (orientation: landscape) {
+    .sidebar {
+        width: 240px;
+    }
+
+    .welcome-hero-card {
+        padding: 20px 15px;
+    }
+
+    #rewards-wheel-overlay {
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+
+    #wheel-frame {
+        width: min(60vh, 280px) !important;
+        height: min(60vh, 280px) !important;
+    }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar, .mobile-nav-toggle, .cart-trigger-btn,
+    .cart-dropdown-panel, .theme-customize-btn, .theme-customize-panel,
+    .theme-customize-panel-wrapper, #rewards-wheel-overlay {
+        display: none !important;
+    }
+    .whole-page, .shop-split-page {
+        flex-direction: column;
+    }
+    .main-content, .shop-scroll-view {
+        padding: 0;
+    }
+}

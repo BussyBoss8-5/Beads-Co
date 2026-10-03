@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Beads & Co. | Customer Dashboard</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=Comfortaa:wght@400;700&family=Fredoka:wght@400;600&display=swap">
     <style>
         .shop-split-page { display: flex; width: 100vw; height: 100vh; position: relative; }
         .shop-scroll-view { flex: 1; padding: 40px; display: flex; flex-direction: column; gap: 35px; height: 100%; overflow-y: auto; }
@@ -15,10 +18,141 @@
         .riddle-text-field:focus { border-color: var(--logo-pink); }
         .riddle-submit-btn { background-color: var(--text-plum); color: #FFFFFF; border: none; padding: 14px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s ease; }
         .riddle-submit-btn:hover { background-color: var(--logo-pink); }
+
+        .theme-customize-btn {
+            position: fixed; bottom: 30px; right: 30px; width: 56px; height: 56px; border-radius: 50%;
+            background: #FFFFFF; border: 3px solid var(--logo-mint); font-size: 24px; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); z-index: 90; transition: transform 0.2s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .theme-customize-btn:hover { transform: scale(1.08) rotate(15deg); }
+        .theme-customize-panel {
+            position: fixed; bottom: 100px; right: 30px; width: 320px; background: #FFFFFF; border-radius: 20px;
+            padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.18); z-index: 91; opacity: 0; pointer-events: none;
+            transform: translateY(10px); transition: 0.25s ease; display: flex; flex-direction: column; gap: 10px;
+            max-height: 80vh; overflow-y: auto;
+        }
+        .theme-customize-panel.show-panel { opacity: 1; pointer-events: auto; transform: translateY(0); }
+        .theme-panel-header { display: flex; justify-content: space-between; align-items: center; }
+        .theme-panel-header h4 { font-size: 15px; font-weight: 800; }
+        .theme-panel-close { background: var(--bg-mint); border: none; border-radius: 8px; padding: 4px 9px; cursor: pointer; font-weight: bold; }
+        .theme-panel-sub { font-size: 12px; color: var(--gray-text); margin-top: -6px; }
+        .theme-current-label { font-size: 12px; font-weight: 700; color: var(--text-plum); background: var(--bg-mint); padding: 6px 10px; border-radius: 8px; }
+        .theme-panel-section { font-size: 11px; font-weight: 800; color: var(--gray-text); text-transform: uppercase; margin-top: 4px; }
+        .theme-swatch-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+        .theme-swatch-option {
+            height: 48px; border-radius: 12px; border: 3px solid transparent; cursor: pointer; color: #FFFFFF;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 15px; gap: 1px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.35);
+        }
+        .theme-swatch-option span { font-size: 8px; font-weight: 700; text-transform: uppercase; }
+        .theme-swatch-option.active-swatch { border-color: var(--text-plum); }
+        .theme-reset-btn { background: var(--bg-mint); border: none; padding: 10px; border-radius: 10px; font-weight: 700; font-size: 13px; cursor: pointer; color: var(--text-plum); }
+        .theme-reset-btn:hover { background: var(--logo-mint); }
     </style>
 </head>
 <body>
 
+    <button class="theme-customize-btn" onclick="toggleThemeCustomizer()" title="Customize Theme">🎨</button>
+    <!-- THEME CUSTOMIZE PANEL CONTEXT CONTAINER -->
+<!-- COMPLETE TABBED STUDIO SIDEBAR FRAME -->
+<div id="theme-customize-panel" class="theme-customize-panel-wrapper" style="width: 280px; max-height: 85vh; padding: 20px; font-family: 'Segoe UI', sans-serif;">
+    
+    <div class="modal-top" style="margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--bg-mint); padding-bottom: 8px;">
+        <h4 style="font-weight: 800; font-size: 15px; margin: 0;">🛠️ Studio Settings</h4>
+        <!-- FIX: Close button hooked directly into live window customizer method -->
+        <button class="close-modal-x" onclick="window.toggleThemeCustomizer()" style="background: var(--bg-mint); border: none; font-size: 14px; font-weight: bold; padding: 4px 8px; border-radius: 8px; cursor: pointer; color: #1E6B57;">✕</button>
+    </div>
+
+    <!-- 🗂️ MINI NAVIGATION TAB TOGGLE BAR -->
+    <div class="customizer-tab-bar" style="display: flex; gap: 4px; margin-bottom: 15px; background: rgba(0,0,0,0.05); padding: 3px; border-radius: 8px;">
+        <button id="tab-btn-colors" class="customizer-tab-active" onclick="window.switchCustomizerTab('colors')" style="flex: 1; padding: 6px; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 12px;">🎨 Colors</button>
+        <button id="tab-btn-layouts" class="customizer-tab-inactive" onclick="window.switchCustomizerTab('layouts')" style="flex: 1; padding: 6px; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 12px;">⚙️ Styles</button>
+    </div>
+
+    <!-- ==========================================
+         PAGE 1: LIVE COLOR SWITCHES PANEL 
+         ========================================== -->
+    <div id="customizer-page-colors" class="customizer-page-view">
+        <p id="theme-current-label" style="font-size: 11px; margin-bottom: 12px; text-align: center;">Current: <strong>Default</strong></p>
+
+        <p class="theme-panel-section">🌈 Rainbow</p>
+        <div class="theme-swatch-grid">
+            <button class="theme-swatch-option" data-theme="rubyRed" style="background:linear-gradient(135deg,#E63946,#F5C2C7);" onclick="applySiteTheme('rubyRed')">❤️<span>Red</span></button>
+            <button class="theme-swatch-option" data-theme="tangerineOrange" style="background:linear-gradient(135deg,#FB8B24,#FFD2AD);" onclick="applySiteTheme('tangerineOrange')">🧡<span>Orange</span></button>
+            <button class="theme-swatch-option" data-theme="sunnyGold" style="background:linear-gradient(135deg,#FF9F1C,#FFE29A);" onclick="applySiteTheme('sunnyGold')">💛<span>Yellow</span></button>
+            <button class="theme-swatch-option" data-theme="emeraldGreen" style="background:linear-gradient(135deg,#2E9E5B,#B7E4C7);" onclick="applySiteTheme('emeraldGreen')">💚<span>Green</span></button>
+            <button class="theme-swatch-option" data-theme="skyBlue" style="background:linear-gradient(135deg,#4CACE0,#BFE0F5);" onclick="applySiteTheme('skyBlue')">💙<span>Blue</span></button>
+            <button class="theme-swatch-option" data-theme="indigoNight" style="background:linear-gradient(135deg,#4B4E9E,#C6C6ED);" onclick="applySiteTheme('indigoNight')">💜<span>Indigo</span></button>
+            <button class="theme-swatch-option" data-theme="violetBloom" style="background:linear-gradient(135deg,#8E44AD,#D9C2F0);" onclick="applySiteTheme('violetBloom')">🟣<span>Violet</span></button>
+        </div>
+
+        <p class="theme-panel-section">✨ Extra Shades</p>
+        <div class="theme-swatch-grid">
+            <button class="theme-swatch-option" data-theme="roseBlush" style="background:linear-gradient(135deg,#FF6F9D,#FFC2D1);" onclick="applySiteTheme('roseBlush')">🌸<span>Rose</span></button>
+            <button class="theme-swatch-option" data-theme="mintBreeze" style="background:linear-gradient(135deg,#2EC4B6,#BCE7DC);" onclick="applySiteTheme('mintBreeze')">🍃<span>Mint</span></button>
+            <button class="theme-swatch-option" data-theme="tealDeep" style="background:linear-gradient(135deg,#128C87,#A9E0DE);" onclick="applySiteTheme('tealDeep')">🩵<span>Teal</span></button>
+            <button class="theme-swatch-option" data-theme="coralReef" style="background:linear-gradient(135deg,#FF6F52,#FFC2B2);" onclick="applySiteTheme('coralReef')">🪸<span>Coral</span></button>
+            <button class="theme-swatch-option" data-theme="lavenderDream" style="background:linear-gradient(135deg,#B47EEA,#D9C2F0);" onclick="applySiteTheme('lavenderDream')">🪻<span>Lavender</span></button>
+            <button class="theme-swatch-option" data-theme="plumBerry" style="background:linear-gradient(135deg,#8E3B6B,#DCB8D4);" onclick="applySiteTheme('plumBerry')">🍇<span>Plum</span></button>
+            <button class="theme-swatch-option" data-theme="peachyCream" style="background:linear-gradient(135deg,#FF8B6A,#FBD1BE);" onclick="applySiteTheme('peachyCream')">🍑<span>Peach</span></button>
+            <button class="theme-swatch-option" data-theme="sandyBeige" style="background:linear-gradient(135deg,#C08A4E,#EBD9B4);" onclick="applySiteTheme('sandyBeige')">🏖️<span>Sandy</span></button>
+            <button class="theme-swatch-option" data-theme="slateGray" style="background:linear-gradient(135deg,#546578,#C4CCD4);" onclick="applySiteTheme('slateGray')">🪨<span>Slate</span></button>
+            <button class="theme-swatch-option" data-theme="charcoalChic" style="background:linear-gradient(135deg,#3A3A45,#C7C7CE);" onclick="applySiteTheme('charcoalChic')">🖤<span>Charcoal</span></button>
+        </div>
+
+        <p class="theme-panel-section">🎇 Gradients</p>
+        <div class="theme-swatch-grid">
+            <button class="theme-swatch-option" data-theme="sunsetGradient" style="background:linear-gradient(135deg,#FB8B24,#FF6F9D);" onclick="applySiteTheme('sunsetGradient')">🌇<span>Sunset</span></button>
+            <button class="theme-swatch-option" data-theme="oceanGradient" style="background:linear-gradient(135deg,#4CACE0,#2EC4B6);" onclick="applySiteTheme('oceanGradient')">🌊<span>Ocean</span></button>
+            <button class="theme-swatch-option" data-theme="auroraGradient" style="background:linear-gradient(135deg,#8E44AD,#2EC4B6 60%,#FFD166);" onclick="applySiteTheme('auroraGradient')">🌌<span>Aurora</span></button>
+            <button class="theme-swatch-option" data-theme="berryGradient" style="background:linear-gradient(135deg,#E63946,#8E44AD);" onclick="applySiteTheme('berryGradient')">🍓<span>Berry</span></button>
+            <button class="theme-swatch-option" data-theme="goldenHourGradient" style="background:linear-gradient(135deg,#FF9F1C,#FB8B24);" onclick="applySiteTheme('goldenHourGradient')">🌅<span>Golden Hr</span></button>
+            <button class="theme-swatch-option" data-theme="midnightGradient" style="background:linear-gradient(135deg,#4B4E9E,#3A3A45);" onclick="applySiteTheme('midnightGradient')">🌃<span>Midnight</span></button>
+        </div>
+        
+        <p class="theme-panel-section" style="font-size: 11px; font-weight: 700; color: var(--gray-text); margin-bottom: 6px; text-transform: uppercase;">🔮 All-Sorts Mixes</p>
+        <div class="theme-swatch-grid">
+            <button class="theme-swatch-option" data-theme="cottonCandyMix" style="background:linear-gradient(135deg, #FFC2D1, #4CACE0);" onclick="window.applySiteTheme('cottonCandyMix')">🍬 <span>Cotton Candy</span></button>
+            <button class="theme-swatch-option" data-theme="neonTracerMix" style="background:#39FF14; border: 1px solid #3A3A45;" onclick="window.applySiteTheme('neonTracerMix')">⚡ <span>Neon Tracer</span></button>
+            <button class="theme-swatch-option" data-theme="vintagePastelMix" style="background:#E63946; border: 2px solid #EBD9B4;" onclick="window.applySiteTheme('vintagePastelMix')">⏳ <span>Vintage Pastel</span></button>
+            <button class="theme-swatch-option" data-theme="cyberpunkBeadMix" style="background:linear-gradient(135deg, #FF007F, #00F0FF);" onclick="window.applySiteTheme('cyberpunkBeadMix')">👾 <span>Cyberpunk</span></button>
+            <button class="theme-swatch-option" data-theme="tropicalSorbetMix" style="background:linear-gradient(135deg, #FF6F52, #FF9F1C);" onclick="window.applySiteTheme('tropicalSorbetMix')">🍹 <span>Trop Sorbet</span></button>
+        </div>
+        
+        <button class="refresh-button" onclick="window.resetSiteTheme()" style="width: 100%; margin-top: 15px; padding: 10px; font-size: 12px;">🔄 Reset Canvas Colors</button>
+    </div>
+
+    <!-- ==========================================
+         PAGE 2: LIVE ENGINE LAYOUT SHAPES PANEL
+         ========================================== -->
+    <div id="customizer-page-layouts" class="customizer-page-view" style="display: none;">
+        
+        <p class="theme-panel-section" style="font-size: 11px; font-weight: 700; color: var(--gray-text); margin-bottom: 6px; text-transform: uppercase;">🔤 Typography Fonts</p>
+        <div class="theme-swatch-grid">
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('font', 'bubblegum')">🎈 <span>Bubblegum</span></button>
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('font', 'minimal')">📐 <span>Minimalist</span></button>
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('font', 'pixel')">🕹️ <span>8-Bit Pixel</span></button>
+        </div>
+
+        <p class="theme-panel-section" style="font-size: 11px; font-weight: 700; color: var(--gray-text); margin-top: 12px; margin-bottom: 6px; text-transform: uppercase;">📐 Structural Geometry</p>
+        <div class="theme-swatch-grid">
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('shape', 'bubbly')">🟢 <span>Round Pill</span></button>
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('shape', 'sharp')">📐 <span>Sharp Box</span></button>
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('shape', 'brutal')">🕶️ <span>Brutalism</span></button>
+        </div>
+
+        <p class="theme-panel-section" style="font-size: 11px; font-weight: 700; color: var(--gray-text); margin-top: 12px; margin-bottom: 6px; text-transform: uppercase;">🎬 Engine Animations</p>
+        <div class="theme-swatch-grid">
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('motion', 'float')">🎈 <span>Float Drift</span></button>
+            <button class="theme-swatch-option layout-swatch-node" style="background: #FFF; border: 1px solid var(--logo-mint);" onclick="window.applyLayoutSetting('motion', 'static')">⚡ <span>Snappy Snap</span></button>
+        </div>
+    </div>
+</div>
+
+
+
+        
     <div class="shop-split-page">
 
         <!-- Navigation Drawer Sidebar -->
@@ -29,7 +163,11 @@
                 <a href="customer.html" class="menu-item">🛍️ Shop Store</a>
                 <a href="bestsellers.html" class="menu-item">⭐ Best Sellers</a>
                 <a href="giftkits.html" class="menu-item">🎁 Gift Kits</a>
-                <a href="#" class="menu-item" onclick="triggerCustomerLoginPrompt(event)" style="border-top: 1px solid rgba(0,0,0,0.05); margin-top: 10px;">👤 Log In</a>
+                <a href="games.html" class="menu-item">🎮 Kids' Fun Zone</a>
+                <!-- Paste this inside your sidebar .menu-buttons container across your files -->
+                <button class="menu-item" onclick="window.toggleRewardsWheel()" style="background: none; border: none; text-align: left; width: 100%; cursor: pointer;">🎡 Daily Spin</button>
+
+                <a href="login.html" class="menu-item" style="border-top: 1px solid rgba(0,0,0,0.05); margin-top: 10px;">👤 Log In</a>
                 <a href="#" class="menu-item" onclick="triggerCustomerLogout(event)" style="font-size: 13px; color: var(--gray-text); opacity: 0.7;">✕ Logout</a>
                 <a href="admin.html" class="menu-item admin-dashed-btn">⚙️ Admin Panel</a>
             </nav>
@@ -110,6 +248,18 @@
             <h4 class="cart-dropdown-header">🛒 Selected Items</h4>
             <div class="cart-items-list" id="cart-list-container"></div>
             <div class="payment-box">
+                <!-- DYNAMIC COUPON FIELD (Place right inside your cart-dropdown-panel) -->
+<!-- DYNAMIC COUPON FIELD (Place right inside your cart-dropdown-panel) -->
+<div class="payment-box" style="margin-top: 10px; border-top: 1px solid var(--bg-mint); padding-top: 10px;">
+    <label style="font-size: 11px; font-weight: 700; color: var(--gray-text); text-transform: uppercase; display: block; margin-bottom: 4px;">🎟️ Have a Promo Code?</label>
+    <div style="display: flex; gap: 6px;">
+        <input type="text" id="cart-coupon-input" placeholder="e.g. SHOP10" style="flex: 1; padding: 6px 10px; border: 2px solid var(--bg-mint); border-radius: 8px; outline: none; font-size: 12px; text-transform: uppercase;">
+        <button onclick="window.applyCartPromoCode()" style="padding: 6px 12px; background: var(--text-plum); color: #FFF; border: none; font-weight: bold; border-radius: 8px; font-size: 12px; cursor: pointer; transition: 0.2s;">Apply</button>
+    </div>
+    <div id="coupon-alert-msg" style="font-size: 11px; font-weight: bold; margin-top: 4px; display: none;"></div>
+</div>
+
+
                 <label>Choose Payment Option</label>
                 <select id="checkout-payment-type">
                     <option value="Cash on Delivery">💵 Cash When Delivered ($0 fee)</option>
@@ -132,5 +282,37 @@
     </div>
 
     <script src="script.js"></script>
+    <!-- DAILY REWARDS WHEEL POPUP MODAL WRAPPER -->
+<!-- ADULT REWARDS WHEEL POPUP MODAL WRAPPER -->
+<div id="rewards-wheel-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(29,17,40,0.85); z-index:100000; display:none; flex-direction:column; justify-content:center; align-items:center; color:#FFF; font-family:sans-serif;">
+    <h2 style="margin-bottom:5px; color:#FFC93C; font-weight:800;">🎡 Boutique Rewards Wheel</h2>
+    <p style="margin:0 0 20px 0; font-size:13px; color:#E5E5E5;">Spin once a day to unlock exclusive designer perks and checkout discounts!</p>
+    
+    <div id="wheel-frame" style="position:relative; width:340px; height:340px; background:#FFF; border-radius:50%; border:8px solid var(--text-plum); box-shadow:0 10px 30px rgba(0,0,0,0.3); overflow:hidden; display:flex; align-items:center; justify-content:center;">
+        <!-- 8-Slice Conic Gradient Wheel (45 degrees per segment) -->
+        <div id="spinning-wheel-canvas" style="position:absolute; width:100%; height:100%; border-radius:50%; transition: transform 4s cubic-bezier(0.1, 0.8, 0.25, 1); background: conic-gradient(#FF7FA5 0deg 45deg, #FFC93C 45deg 90deg, #4CACE0 90deg 135deg, #B47EEA 135deg 180deg, #BCE7DC 180deg 225deg, #FB8B24 225deg 270deg, #E63946 270deg 315deg, #2EC4B6 315deg 360deg);"></div>
+        
+        <!-- Typography layer map covering all 8 expanded prize segments -->
+        <div id="wheel-labels" style="position:absolute; width:100%; height:100%; border-radius:50%; transition: transform 4s cubic-bezier(0.1, 0.8, 0.25, 1); pointer-events:none; color:#1D1128; font-weight:800; font-size:10px;">
+            <div style="position:absolute; top:30px; left:56%; transform:translateX(-50%) rotate(22.5deg);">-10% Off</div>
+            <div style="position:absolute; right:35px; top:110px; transform:translateY(-50%) rotate(67.5deg);">Free Gift</div>
+            <div style="position:absolute; right:35px; bottom:110px; transform:translateY(50%) rotate(112.5deg);">-15% Off</div>
+            <div style="position:absolute; bottom:30px; left:56%; transform:translateX(-50%) rotate(157.5deg);">Free Ship</div>
+            <div style="position:absolute; bottom:30px; left:33%; transform:translateX(-50%) rotate(202.5deg);">-5% Off</div>
+            <div style="position:absolute; left:35px; bottom:110px; transform:translateY(50%) rotate(247.5deg);">BOGO Deal</div>
+            <div style="position:absolute; left:35px; top:110px; transform:translateY(-50%) rotate(292.5deg);">-20% Off</div>
+            <div style="position:absolute; top:30px; left:33%; transform:translateX(-50%) rotate(337.5deg);">📦 Upgrade</div>
+        </div>
+
+        <!-- The stationary center pin tracker toggle button -->
+        <button id="wheel-spin-trigger" style="position:absolute; width:75px; height:75px; background:var(--text-plum); border:4px solid #FFF; color:#FFF; border-radius:50%; font-weight:900; font-size:13px; cursor:pointer; z-index:10; box-shadow:0 4px 10px rgba(0,0,0,0.2);">SPIN</button>
+        
+        <!-- Fixed top selector pointer arrow node -->
+        <div style="position:absolute; top:-2px; left:50%; transform:translateX(-50%); width:0; height:0; border-left:14px solid transparent; border-right:14px solid transparent; border-top:24px solid var(--text-plum); z-index:20;"></div>
+    </div>
+    
+    <button onclick="window.toggleRewardsWheel()" style="margin-top:25px; padding:10px 24px; border-radius:12px; border:none; background:var(--text-plum); color:#FFF; font-weight:bold; cursor:pointer;">Back to Shop</button>
+</div>
+
 </body>
 </html>
